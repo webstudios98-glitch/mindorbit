@@ -1,0 +1,141 @@
+/* Chat CSS — Dark Neon MindOrbit style (merge with your site CSS if needed) */
+
+/* Basic layout */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at center, #0d0d2b 0%, #000 100%);
+  color: #e7fbff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+header {
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  padding: 12px 18px;
+  box-shadow: 0 6px 30px rgba(0, 230, 255, 0.06);
+  display:flex; align-items:center; justify-content:space-between;
+}
+header h1 { margin:0; font-size:1.1rem; color:white; }
+header nav a { color:white; margin-left:12px; text-decoration:none; font-weight:700; }
+header nav a.active { text-decoration:underline; opacity:0.95; }
+
+/* Chat card */
+.chat-card {
+  max-width: 980px;
+  margin: 28px auto;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(8,8,18,0.9), rgba(12,12,28,0.82));
+  border: 1px solid rgba(0,230,255,0.06);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* header inside card */
+.chat-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.chat-head h2 { margin:0; font-size:1.05rem; color:#00e0ff; }
+.muted { margin:0; font-size:0.85rem; color:#9fdfff; opacity:0.85; }
+
+/* messages */
+.messages {
+  min-height: 260px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  border-radius:10px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.08));
+  border: 1px solid rgba(255,255,255,0.02);
+}
+
+/* message bubbles */
+.msg {
+  max-width:78%;
+  padding:10px 14px;
+  border-radius:12px;
+  line-height:1.35;
+  word-break: break-word;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+  opacity:0; transform: translateY(6px); animation: popIn .18s forwards;
+}
+
+/* user bubble */
+.msg.user {
+  align-self:flex-end;
+  background: linear-gradient(45deg,#00e0ff,#ff00ff);
+  color:#011014;
+  border-bottom-right-radius:6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* bot bubble */
+.msg.bot {
+  align-self:flex-start;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  color:#e7fbff;
+  border:1px solid rgba(255,255,255,0.02);
+  border-bottom-left-radius:6px;
+}
+
+/* typing indicator */
+.msg.typing {
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+}
+.typing-dot {
+  width:8px; height:8px; border-radius:50%;
+  background: rgba(255,255,255,0.6);
+  animation: blink 1.1s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay:0.15s; }
+.typing-dot:nth-child(3) { animation-delay:0.3s; }
+@keyframes blink { 0% {opacity:0.25} 50%{opacity:1} 100%{opacity:0.25} }
+
+@keyframes popIn { to { opacity:1; transform:none; } }
+
+/* controls */
+.controls {
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-top:12px;
+}
+.controls input[type="text"]{
+  flex:1;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.04);
+  background: rgba(8,8,16,0.6);
+  color:#eaffff;
+  outline:none;
+}
+.controls .send {
+  background: linear-gradient(90deg,#00e0ff,#ff00ff);
+  border:none; color:#001616; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer;
+}
+.controls .mic {
+  background: rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.03);
+  color:#eaffff; padding:10px 12px; border-radius:10px; cursor:pointer;
+}
+
+/* clear button */
+#clearBtn {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.03);
+  color:#eaffff; padding:8px 10px; border-radius:8px; cursor:pointer;
+}
+
+/* hint & footer note */
+.hint { margin-top:8px; color:#9fdfff; font-size:0.9rem; opacity:0.95; }
+.footer-note { margin-top:8px; font-size:0.85rem; color:#bfefff; opacity:0.9; }
+
+/* responsive */
+@media (max-width:700px) {
+  .chat-card { margin:12px; padding:12px; }
+  .messages { max-height: 300px; min-height:180px; }
+  .controls input[type="text"]{ font-size:0.95rem; padding:10px; }
+}

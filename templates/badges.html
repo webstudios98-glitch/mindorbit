@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindOrbit - Badges</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .badge {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: 0.3s;
+    }
+    .badge.locked {
+      opacity: 0.4;
+      filter: grayscale(100%);
+    }
+    .badge.unlocked {
+      opacity: 1;
+      box-shadow: 0 0 15px rgba(0,255,255,0.6);
+      transform: scale(1.05);
+    }
+    .badge img {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <header>
+   <h1>🌌 MindOrbit</h1>
+ <nav>
+  <a href="/home">Home</a>
+      <a href="/chat">Chat</a>
+      <a href="/moodgame">Moodgames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+
+      <a href="/">Sign Up</a>
+
+  </nav>
+  </header>
+
+  <main>
+    <section class="futuristic-card">
+      <h2>🏅 My Badges</h2>
+      <p class="hint">Collect achievements as you explore MindOrbit 🌌</p>
+
+      <div class="badges-grid" id="badgesGrid">
+        <!-- Badges injected here -->
+      </div>
+    </section>
+  </main>
+
+ <footer>
+  <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
+</footer>
+
+
+  <script>
+    // All available badges
+    const allBadges = [
+      { id: "firstScan", name: "First Scan", icon: "🌌" },
+      { id: "dotMaster", name: "Dot Connector", icon: "🎇" },
+      { id: "painter", name: "Creative Painter", icon: "🎨" },
+      { id: "soundMixer", name: "Sound Explorer", icon: "🎧" },
+      { id: "quoteOracle", name: "Quote Oracle", icon: "🔮" },
+      { id: "alchemyMind", name: "Mind Alchemist", icon: "🧪" },
+      { id: "noteHeart", name: "Heart Writer", icon: "📝" }
+    ];
+
+    // Fetch unlocked badges
+    const unlocked = JSON.parse(localStorage.getItem("mindorbit_badges") || "[]");
+
+    const grid = document.getElementById("badgesGrid");
+    allBadges.forEach(badge => {
+      const div = document.createElement("div");
+      div.className = "badge " + (unlocked.includes(badge.id) ? "unlocked" : "locked");
+      div.innerHTML = `<div style="font-size:2rem;">${badge.icon}</div><p>${badge.name}</p>`;
+      grid.appendChild(div);
+    });
+  </script>
+ <script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='dotconnect.js') }}"></script>
+
+
+
+</body>
+</html>

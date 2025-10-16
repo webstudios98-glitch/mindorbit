@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MindOrbit - Little Alchemy</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  <style>
+    .alchemy-grid {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .panel {
+      width: 360px;
+      max-width: 92%;
+      background: rgba(255,255,255,0.03);
+      border: 2px solid rgba(255,255,255,0.07);
+      padding: 14px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,255,255,0.06);
+    }
+    .elements-list { display: flex; flex-wrap: wrap; gap: 10px; }
+    .element {
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: grab;
+      user-select: none;
+      font-weight: 600;
+    }
+    .workspace {
+      height: 320px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02));
+      border: 2px dashed rgba(0,255,255,0.06);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 12px;
+      align-content: flex-start;
+      overflow: auto;
+    }
+    .result {
+      background: linear-gradient(90deg,#00e0ff,#ff00ff);
+      color: #050505;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(255,0,255,0.12);
+    }
+    .discoveries { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .small-btn {
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background: rgba(255,255,255,0.04);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+  <a href="/moodgame" class="back-btn">⬅ Back</a>
+
+
+  <header>
+    <h1>🌌 MindOrbit</h1>
+    <nav>
+   
+        <a href="/home">Home</a>
+      <a href="/chat">Chat</a>
+      <a href="/moodgame">Moodgames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+            <a href="/contact">Contact</a>
+
+      <a href="/about">About</a>
+      <a href="/">Sign Up</a>
+
+    </nav>
+  </header>
+
+  <main>
+    <section class="futuristic-card">
+      <h2>🧪 Little Alchemy — Mind Edition</h2>
+
+      <!-- Mode Toggle -->
+      <div style="margin-bottom:1rem; text-align:center;">
+        <label for="modeToggle" style="margin-right:8px;">Mode:</label>
+        <select id="modeToggle">
+          <option value="motivational" selected>Motivational</option>
+          <option value="relaxing">Relaxing</option>
+        </select>
+      </div>
+
+      <div class="alchemy-grid">
+        <!-- Base Elements -->
+        <div class="panel">
+          <h3>Base Elements</h3>
+          <div class="elements-list" id="baseElements"></div>
+          <div style="margin-top:10px;">
+            <button class="small-btn" id="resetDiscoveries">Reset Discoveries</button>
+          </div>
+        </div>
+
+        <!-- Workspace -->
+        <div class="panel">
+          <h3>Workspace</h3>
+          <div id="workspace" class="workspace" aria-label="Alchemy workspace"></div>
+          <p class="hint">Drop or click elements to add. Select two and press Combine.</p>
+          <div style="margin-top:10px;">
+            <button class="small-btn" id="combineBtn">🔗 Combine</button>
+            <button class="small-btn" id="clearWorkspace">🧹 Clear</button>
+          </div>
+
+          <h4 style="margin-top:12px;">Discoveries</h4>
+          <div id="discoveries" class="discoveries"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+    <footer>
+  <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
+</footer>
+ <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='littlealchemy.js') }}" defer></script>
+
+
+</body>
+</html>

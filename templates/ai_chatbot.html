@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MindOrbit — Robust AI Mini</title>
+
+  <!-- Main MindOrbit style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Chat-specific enhancements (static/chat.css) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
+</head>
+<body>
+  <header>
+    <h1>🌌 MindOrbit</h1>
+    <nav>
+      <a href="/home">Home</a>
+      <a href="/chat" class="active">Chat</a>
+      <a href="/moodgame">Moodgames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/about">About</a>
+      <a href="/">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="futuristic-card chat-card full-chat">
+      <div class="chat-head">
+        <div>
+          <h2>💬 Robust — Mini (MindOrbit)</h2>
+          <p class="muted">Mixed Mood • Adaptive • Bilingual (Hindi / English)</p>
+        </div>
+        <button id="clearBtn" class="clear-btn" title="Clear chat">🧹</button>
+      </div>
+
+      <div id="messages" class="messages" aria-live="polite" role="log">
+        <!-- messages injected dynamically -->
+      </div>
+
+      <div class="controls">
+        <button id="micBtn" class="mic-btn">🎤 Speak</button>
+        <input id="userInput" type="text" placeholder="Type a message..." autocomplete="off" />
+        <button id="sendBtn" class="send-btn">➤ Ask</button>
+      </div>
+
+      <p class="hint">
+        💡 Tip: Speak or type — Robust adapts to your tone and mood.
+      </p>
+
+      <p class="footer-note">
+        🧠✨ (Try full power mode → Robust App coming soon!)
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 MindOrbit · Robust Mini</p>
+  </footer>
+
+  <!-- chat.js located at static/chat.js -->
+  <script src="{{ url_for('static', filename='chat.js') }}"></script>
+</body>
+</html>

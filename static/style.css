@@ -1,0 +1,693 @@
+/* ========================
+   RESET & BASE STYLES
+   ======================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Orbitron', sans-serif;
+    background: #0d0d0d;
+    color: white;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========================
+   HEADER
+   ======================== */
+header {
+    background: linear-gradient(90deg, #ff00ff, #00ffff);
+    padding: 15px 0;
+    box-shadow: 0 0 20px #00ffff;
+}
+header h1 {
+    color: white;
+    margin-bottom: 5px;
+}
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+nav a:hover {
+    color: #00ffff;
+}
+
+/* ========================
+   MAIN CONTENT
+   ======================== */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* ========================
+   SCANNER SECTION
+   ======================== */
+.scanner-section h2 {
+    margin-bottom: 20px;
+    color: #00ffff;
+}
+.scanner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+#video {
+    width: 400px;
+    height: 300px;
+    border: 3px solid #00ffff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+    object-fit: cover;
+}
+
+/* ========================
+   BUTTONS
+   ======================== */
+button {
+    background: linear-gradient(90deg, #ff00ff, #00ffff);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0 0 10px #ff00ff;
+    transition: background 0.4s ease, transform 0.2s ease;
+}
+button:hover {
+    background: linear-gradient(90deg, #00ffff, #ff00ff);
+    transform: scale(1.05);
+}
+
+/* ========================
+   MOOD RESULT TEXT
+   ======================== */
+#moodResult {
+    font-size: 1.5em;
+    margin-top: 15px;
+    text-shadow: 0 0 10px currentColor;
+    animation: none;
+}
+@keyframes moodGlow {
+    0% { transform: scale(1); text-shadow: 0 0 10px currentColor; }
+    50% { transform: scale(1.1); text-shadow: 0 0 25px currentColor; }
+    100% { transform: scale(1); text-shadow: 0 0 10px currentColor; }
+}
+
+/* ========================
+   BADGE POPUP
+   ======================== */
+.badge-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(0,0,0,0.9);
+    border: 2px solid #00ffff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 30px #ff00ff;
+    transition: transform 0.5s ease-in-out;
+    z-index: 1000;
+}
+.badge-popup img {
+    width: 100px;
+    margin-bottom: 10px;
+}
+.badge-popup.show {
+    transform: translate(-50%, -50%) scale(1);
+}
+.hidden {
+    display: none;
+}
+
+/* ========================
+   FOOTER
+   ======================== */
+footer {
+    background: #1f1f1f;
+    padding: 10px;
+    font-size: 0.9em;
+    color: #ccc;
+}
+/* Background canvas */
+#bgCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  background: radial-gradient(circle at center, #0a0a1f, #000000);
+}
+
+/* Futuristic card design */
+.futuristic-card {
+  background: rgba(20, 20, 40, 0.9);
+  border: 2px solid rgba(0, 200, 255, 0.5);
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 200, 255, 0.5);
+  padding: 2rem;
+  text-align: center;
+  animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 15px rgba(0,200,255,0.3); }
+  to { box-shadow: 0 0 35px rgba(255,0,200,0.7); }
+}
+
+/* Scanner video */
+.scanner-container {
+  position: relative;
+  width: 300px; height: 240px;
+  margin: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #00e0ff;
+  box-shadow: 0 0 20px #00e0ff;
+}
+
+.scanner-container video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.scanner-container .overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 2px dashed rgba(0,255,255,0.5);
+  animation: scanPulse 2s infinite;
+}
+
+@keyframes scanPulse {
+  0% { border-color: rgba(0,255,255,0.2); }
+  100% { border-color: rgba(255,0,255,0.8); }
+}
+/* Futuristic Form Styling */
+.form input,
+.form select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 2px solid rgba(0,255,255,0.6);
+  border-radius: 8px;
+  background: rgba(20,20,40,0.7);
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.form input:focus,
+.form select:focus {
+  border-color: #ff00ff;
+  box-shadow: 0 0 10px #ff00ff;
+}
+
+button {
+  padding: 12px 25px;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #00e0ff, #ff00ff);
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ff00ff;
+}
+
+.guest-btn {
+  display: block;
+  margin: auto;
+}
+
+.or {
+  margin: 15px 0;
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+}
+.game-list {
+  list-style: none;
+  padding: 0;
+}
+
+.game-list li {
+  margin: 10px 0;
+}
+
+.game-list a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #00e0ff;
+  transition: 0.3s;
+}
+
+.game-list a:hover {
+  color: #ff00ff;
+  text-shadow: 0 0 10px #ff00ff;
+}
+/* ====== Shared Layout & Helpers (keep your existing base/theme) ====== */
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 1rem;
+}
+
+.game-card {
+  display: block;
+  background: rgba(20,20,40,0.85);
+  border: 2px solid rgba(0,255,255,0.4);
+  border-radius: 14px;
+  padding: 16px;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(0,255,255,0.2);
+  transition: transform .2s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: #ff00ff;
+  box-shadow: 0 0 24px rgba(255,0,255,0.45);
+}
+.game-card h3 { margin: 8px 0 6px; }
+.game-card p { color: #cfd5ff; font-size: .95rem; }
+.game-icon { font-size: 1.6rem; }
+
+.controls {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  justify-content: center; align-items: center;
+  margin: 10px 0 14px;
+}
+.controls label {
+  background: rgba(20,20,40,0.7);
+  padding: 8px 10px;
+  border: 1px solid rgba(0,255,255,0.35);
+  border-radius: 10px;
+}
+.controls select {
+  background: transparent; color: #fff; border: none; outline: none;
+  font-weight: 600; margin-left: 6px;
+}
+.controls button {
+  padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer;
+  background: linear-gradient(90deg, #00e0ff, #ff00ff); color: #fff; font-weight: 700;
+  box-shadow: 0 0 14px rgba(255,0,255,0.35); transition: transform .2s ease;
+}
+.controls button:hover { transform: scale(1.05); }
+.controls .secondary {
+  background: linear-gradient(90deg, #6060ff, #00d1ff);
+}
+
+.canvas-wrap {
+  display:flex; justify-content:center; align-items:center;
+  margin: 8px auto 10px; width:100%;
+}
+canvas {
+  border-radius: 14px;
+  border: 2px solid rgba(0,255,255,0.45);
+  box-shadow: 0 0 20px rgba(0,255,255,0.25);
+  background: radial-gradient(120% 120% at 50% 50%, #0a0a1c 10%, #000 90%);
+}
+
+.hint {
+  margin-top: 8px;
+  color: #b8d7ff;
+  font-style: italic;
+  letter-spacing: 0.2px;
+}
+
+/* Optional: subtle pulse used in breathing text */
+@keyframes softPulse {
+  0% { opacity: 0.75; }
+  50% { opacity: 1; }
+  100% { opacity: 0.75; }
+}
+/* ====== Shared Layout & Helpers (keep your existing base/theme) ====== */
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 1rem;
+}
+
+.game-card {
+  display: block;
+  background: rgba(20,20,40,0.85);
+  border: 2px solid rgba(0,255,255,0.4);
+  border-radius: 14px;
+  padding: 16px;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(0,255,255,0.2);
+  transition: transform .2s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: #ff00ff;
+  box-shadow: 0 0 24px rgba(255,0,255,0.45);
+}
+.game-card h3 { margin: 8px 0 6px; }
+.game-card p { color: #cfd5ff; font-size: .95rem; }
+.game-icon { font-size: 1.6rem; }
+
+.controls {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  justify-content: center; align-items: center;
+  margin: 10px 0 14px;
+}
+.controls label {
+  background: rgba(20,20,40,0.7);
+  padding: 8px 10px;
+  border: 1px solid rgba(0,255,255,0.35);
+  border-radius: 10px;
+}
+.controls select {
+  background: transparent; color: #fff; border: none; outline: none;
+  font-weight: 600; margin-left: 6px;
+}
+.controls button {
+  padding: 10px 18px; border-radius: 8px; border: none; cursor: pointer;
+  background: linear-gradient(90deg, #00e0ff, #ff00ff); color: #fff; font-weight: 700;
+  box-shadow: 0 0 14px rgba(255,0,255,0.35); transition: transform .2s ease;
+}
+.controls button:hover { transform: scale(1.05); }
+.controls .secondary {
+  background: linear-gradient(90deg, #6060ff, #00d1ff);
+}
+
+.canvas-wrap {
+  display:flex; justify-content:center; align-items:center;
+  margin: 8px auto 10px; width:100%;
+}
+canvas {
+  border-radius: 14px;
+  border: 2px solid rgba(0,255,255,0.45);
+  box-shadow: 0 0 20px rgba(0,255,255,0.25);
+  background: radial-gradient(120% 120% at 50% 50%, #0a0a1c 10%, #000 90%);
+}
+
+.hint {
+  margin-top: 8px;
+  color: #b8d7ff;
+  font-style: italic;
+  letter-spacing: 0.2px;
+}
+
+/* Optional: subtle pulse used in breathing text */
+@keyframes softPulse {
+  0% { opacity: 0.75; }
+  50% { opacity: 1; }
+  100% { opacity: 0.75; }
+}
+.sound-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin-top: 1.2rem;
+}
+.sound-btn {
+  background: rgba(20,20,40,0.8);
+  border: 2px solid rgba(0,255,255,0.35);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 1rem;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,255,255,0.2);
+}
+.sound-btn:hover {
+  border-color: #ff00ff;
+  box-shadow: 0 0 18px rgba(255,0,255,0.4);
+  transform: translateY(-3px);
+}
+.sound-btn.active {
+  background: linear-gradient(90deg, #00e0ff, #ff00ff);
+  box-shadow: 0 0 18px rgba(255,0,255,0.6);
+}
+#quoteText {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  border-left: 4px solid #00e0ff;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+}
+
+#reflectionBox {
+  width: 100%;
+  min-height: 120px;
+  margin-top: 1rem;
+  padding: 12px;
+  border: 2px solid rgba(0,255,255,0.35);
+  border-radius: 8px;
+  background: rgba(20,20,40,0.7);
+  color: white;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+#saveMessage {
+  margin-top: 0.5rem;
+  color: #00ffae;
+  font-size: 0.9rem;
+}
+.noteheart-card {
+  background: url("images/notebook-bg.png"), rgba(20,20,20,0.9);
+  background-size: cover;
+  background-blend-mode: overlay;
+  border: 2px solid rgba(255,255,255,0.15);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255,0,255,0.3);
+  max-width: 800px;
+  margin: 2rem auto;
+  position: relative;
+}
+
+.noteheart-card::before {
+  content: "Write your heart out...";
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-size: 4rem;
+  font-family: "Cursive", sans-serif;
+  color: rgba(255,255,255,0.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#noteBox {
+  width: 100%;
+  min-height: 300px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1.1rem;
+  font-family: "Georgia", serif;
+  color: #fff;
+  z-index: 1;
+  position: relative;
+  padding: 12px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+#clearNote {
+  margin-top: 1rem;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#clearNote:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: #ff00ff;
+}
+.sound-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+
+.sound-buttons button {
+  flex: 1 1 140px;
+}
+
+#paintCanvas {
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  background: rgba(0,0,0,0.8);
+  box-shadow: 0 0 25px rgba(0,255,255,0.3);
+  cursor: crosshair;
+}
+
+.paint-tools {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+}
+#quoteText {
+  font-size: 1.4rem;
+  font-style: italic;
+  color: #00ffe0;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  min-height: 100px;
+  background: rgba(255,255,255,0.05);
+  border-left: 4px solid #ff00ff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,255,255,0.2);
+}
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.game-card {
+  display: block;
+  padding: 2rem;
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: 0.3s ease;
+  box-shadow: 0 0 15px rgba(0,255,255,0.2);
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(255,0,255,0.5);
+}
+/* Little Alchemy panels (global)
+   Add these near other game-specific styles */
+.elements-list .element, .workspace .element {
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.elements-list .element:active, .workspace .element:active {
+  transform: scale(0.98);
+}
+
+/* make .result chips consistent */
+.result { padding:8px 10px; border-radius:8px; font-weight:700; color:#060606; background: linear-gradient(90deg,#00e0ff,#ff00ff); }
+
+/* Feedback form tweaks */
+.futuristic-card form label { display:block; margin-top:8px; color:#cfe9ff; font-weight:600; }
+.futuristic-card form textarea { min-height:140px; }
+
+/* small responsiveness */
+@media (max-width:800px){
+  .alchemy-grid { flex-direction:column; align-items:center; }
+}
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .futuristic-card {
+    margin: 1rem;
+    padding: 1.2rem;
+  }
+
+  .game-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .game-card {
+    padding: 1.4rem;
+  }
+
+  form input, form select, form textarea, button {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+}
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: linear-gradient(90deg,#ff00ff,#00ffe0);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 0 12px rgba(0,255,255,0.6);
+  transition: 0.3s;
+  z-index: 999;
+}
+.back-btn:hover {
+  transform: scale(1.05);
+}
+body {
+  background: radial-gradient(circle at center, #0d0d2b 0%, #000 100%);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+}
+input, select {
+  background: rgba(20,20,35,0.9);
+  color: #00ffe0;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  outline: none;
+}
+button {
+  background: linear-gradient(90deg,#ff00ff,#00ffe0);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  transform: scale(1.05);
+}
+

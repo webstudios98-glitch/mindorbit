@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindOrbit - NoteHeart</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <header>
+  <h1>🌌 MindOrbit</h1>
+  <nav>
+   
+     <a href="/home">Home</a>
+      <a href="/chat">Chat</a>
+      <a href="/moodgame">Moodgames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/about">About</a>  
+           <a href="/contact">Contact</a>
+
+
+      <a href="/">Sign Up</a>
+
+  </nav>
+</header>
+
+
+  <main>
+    <section class="noteheart-card">
+      <h2>✍️ NoteHeart</h2>
+      <p class="hint">Write your heart out. This is your private, anonymous space 💜</p>
+
+      <textarea id="noteBox" placeholder="Write your heart out..."></textarea>
+      <button id="clearNote">🧹 Clear</button>
+    </section>
+  </main>
+
+
+   <footer>
+  <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
+   </footer>
+
+<!-- Inline JS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const noteBox = document.getElementById("noteBox");
+      const clearBtn = document.getElementById("clearNote");
+
+      if (!noteBox || !clearBtn) {
+        console.error("NoteBox or Clear button not found!");
+        return;
+      }
+
+      clearBtn.addEventListener("click", function() {
+        noteBox.value = ""; // clears the textarea
+        noteBox.focus(); // optional: puts cursor back in textarea
+      });
+    });
+  </script>
+<script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+</html>

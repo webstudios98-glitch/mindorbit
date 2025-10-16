@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindOrbit - CalmSpace</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+    #affirmText, #moodLine {
+  transition: opacity 0.6s ease;
+  min-height: 28px;
+}
+
+    .calm-section {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+    }
+    .calm-section h2 {
+      background: linear-gradient(90deg,#00ffe0,#ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    .exercise {
+      margin: 25px 0;
+      padding: 20px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      text-align: left;
+    }
+    .exercise h3 {
+      color: #00ffe0;
+      margin-bottom: 10px;
+    }
+    .exercise p {
+      color: #e0e0e0;
+      line-height: 1.6;
+    }
+    .breathe-circle {
+      width: 120px;
+      height: 120px;
+      margin: 25px auto;
+      border-radius: 50%;
+      background: radial-gradient(circle, #00ffe0, #ff00ff);
+      animation: breathe 6s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(255,0,255,0.5);
+    }
+    @keyframes breathe {
+      0%, 100% { transform: scale(0.8); opacity: 0.7; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+    .affirmations, .mood-boosters {
+      margin-top: 30px;
+      background: rgba(0,0,0,0.3);
+      padding: 20px;
+      border-radius: 12px;
+      font-style: italic;
+      color: #00ffe0;
+      box-shadow: 0 0 15px rgba(255,0,255,0.3);
+    }
+    .affirmations p, .mood-boosters p {
+      font-size: 1.1rem;
+    }
+    .mood-btn {
+      margin-top: 15px;
+      background: linear-gradient(90deg,#ff00ff,#00ffe0);
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .mood-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(0,255,255,0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bgCanvas"></canvas>
+  <a href="/home" class="back-btn">⬅ Back</a>
+
+  <header>
+    <h1 class="logo-text">🌌 MindOrbit</h1>
+<nav>
+   <a href="/home">Home</a>
+      <a href="/chat">Chat</a>
+      <a href="/moodgame">Moodgames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+
+      <a href="/">Sign Up</a>
+
+
+
+  </nav>
+  </header>
+
+  <main>
+    <section class="calm-section">
+      <h2>🕊 CalmSpace — Overcome Anxiety & Stress</h2>
+      <p>When your mind feels heavy, pause for a moment here. You are safe, and you have power to breathe through it 🌌</p>
+
+      <div class="breathe-circle"></div>
+      <p><strong>Follow this simple 4-7-8 breathing technique:</strong></p>
+      <ul style="text-align:left; max-width:600px; margin:10px auto; color:#ccc;">
+        <li>Inhale deeply for 4 seconds 🌬️</li>
+        <li>Hold your breath for 7 seconds 🫁</li>
+        <li>Exhale slowly for 8 seconds 🌊</li>
+      </ul>
+
+      <div class="exercise">
+        <h3>1️⃣ Grounding Technique (5-4-3-2-1)</h3>
+        <p>When anxiety strikes, look around and identify:</p>
+        <ul>
+          <li>5 things you can see 👀</li>
+          <li>4 things you can touch ✋</li>
+          <li>3 things you can hear 👂</li>
+          <li>2 things you can smell 👃</li>
+          <li>1 thing you can taste 👅</li>
+        </ul>
+      </div>
+
+      <div class="exercise">
+        <h3>2️⃣ Release Tension</h3>
+        <p>Slowly tense and release each muscle group in your body — start from your toes, move to your legs, stomach, shoulders, and finally your face. Feel the relaxation spread.</p>
+      </div>
+
+      <div class="exercise">
+        <h3>3️⃣ Reframe Your Thoughts</h3>
+        <p>Write down your worry, then challenge it. Ask — “Is this really true?” or “Is there another way to see this?” Most anxieties lose power when faced with truth.</p>
+      </div>
+
+      <div class="affirmations" id="affirmBox">
+        <p id="affirmText">✨ You are enough, just as you are.</p>
+      </div>
+      <button class="mood-btn" onclick="newAffirmation()">💫 New Affirmation</button>
+
+      <div class="mood-boosters">
+        <p id="moodLine">🎵 Love you Zindagi 🌈</p>
+      </div>
+      <button class="mood-btn" onclick="newMoodLine()">💖 Cheer Me Up</button>
+    </section>
+  </main>
+
+ <footer>
+    <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
+ </footer>
+  <script>
+  const affirmations = [
+    "✨ You are stronger than your anxious thoughts.",
+    "🌿 Breathe. You’ve survived 100% of your worst days.",
+    "💫 You are enough, just as you are.",
+    "🌸 Peace begins when you stop fighting your emotions.",
+    "🌤 Every storm passes, and so will this feeling.",
+    "🕊 Let go. You deserve calm and clarity.",
+    "🌼 You are safe, you are growing, you are healing."
+  ];
+
+  const moodLines = [
+    "🎵 Love you Zindagi 🌈",
+    "💖 Khush raho, mast raho!",
+    "🌞 Smile! You're made of stardust ✨",
+    "🎶 Take a deep breath — the universe is hugging you.",
+    "💫 Tension lene ka nahi, dene ka bhi nahi 😄",
+    "🌸 You glow different when you’re calm.",
+    "🎧 Life’s playlist always gets better — wait for the next song.",
+    "🌈 Dil khol ke haso, duniya apni hai 💕",
+    "💛 You deserve the love you keep trying to give others.",
+    "🌼 Har din ek nayi kahani hai — make it yours 💫"
+  ];
+
+  function typeText(element, text, speed = 40) {
+    element.textContent = "";
+    let i = 0;
+    const interval = setInterval(() => {
+      element.textContent += text[i];
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, speed);
+  }
+
+  function fadeAndType(element, newText) {
+    element.style.opacity = 0;
+    setTimeout(() => {
+      typeText(element, newText);
+      element.style.opacity = 1;
+    }, 400);
+  }
+
+  function newAffirmation() {
+    const affirmText = document.getElementById("affirmText");
+    const random = affirmations[Math.floor(Math.random() * affirmations.length)];
+    fadeAndType(affirmText, random);
+  }
+
+  function newMoodLine() {
+    const moodText = document.getElementById("moodLine");
+    const random = moodLines[Math.floor(Math.random() * moodLines.length)];
+    fadeAndType(moodText, random);
+  }
+</script>

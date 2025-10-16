@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindOrbit - Mood Scanner</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <!-- Background canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <header>
+    <h1>🌌 MindOrbit</h1>
+    <nav>
+      <a href="/home">Home</a>
+      <a href="/chat">Chat</a>
+      <a href="/moodgame">Moodgames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="/">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ✅ Mood Scanner Section -->
+    <section class="scanner-section futuristic-card">
+      <h2>🔮 Mood Scanner</h2>
+      <div class="scanner-container">
+        <video id="video" autoplay playsinline></video>
+        <div class="overlay"></div>
+      </div>
+      <button id="startScanBtn">Start Scan</button>
+      <p id="moodResult">Your mood will appear here</p>
+    </section>
+
+    <!-- Badge Popup -->
+    <div id="badgePopup" class="badge-popup hidden">
+      <img id="badgeImage" src="" alt="Badge" />
+      <p id="badgeText"></p>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+  const video = document.getElementById("video");
+  const result = document.getElementById("moodResult");
+  const btn = document.getElementById("startScanBtn");
+
+  // 🔊 Preload audio files (these should exist in static/sounds/)
+  const scanStartSound = new Audio("{{ url_for('static', filename='sounds/scan_start.mp3') }}");
+  const scanCompleteSound = new Audio("{{ url_for('static', filename='sounds/scan_complete.mp3') }}");
+  const moodSounds = {
+    "😊 Happy": new Audio("{{ url_for('static', filename='sounds/happy.mp3') }}"),
+    "😌 bored": new Audio("{{ url_for('static', filename='sounds/bored.mp3') }}"),
+    "😢 Sad": new Audio("{{ url_for('static', filename='sounds/sad.mp3') }}"),
+    "😠 Angry": new Audio("{{ url_for('static', filename='sounds/angry.mp3') }}"),
+    "🤔 Creative": new Audio("{{ url_for('static', filename='sounds/creative.mp3') }}"),
+    "😎 scared": new Audio("{{ url_for('static', filename='sounds/scared.mp3') }}"),
+    "😎 disgusted": new Audio("{{ url_for('static', filename='sounds/disgusted.mp3') }}"),
+    "crying": new Audio("{{ url_for('static', filename='sounds/crying.mp3') }}"),
+    "shocked": new Audio("{{ url_for('static', filename='sounds/shocked.mp3') }}"),
+    "excited": new Audio("{{ url_for('static', filename='sounds/excited.mp3') }}"),
+            
+
+
+
+
+  };
+
+  // Stop all sounds helper
+  function stopAllSounds() {
+    scanStartSound.pause();
+    scanCompleteSound.pause();
+    for (let s in moodSounds) moodSounds[s].pause();
+    scanStartSound.currentTime = 0;
+    scanCompleteSound.currentTime = 0;
+    for (let s in moodSounds) moodSounds[s].currentTime = 0;
+  }
+
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      result.textContent = "🔍 Scanning your mood...";
+      stopAllSounds();
+      scanStartSound.play();
+
+      try {
+        // Ask for camera
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+
+        // Simulate scanning delay
+        setTimeout(() => {
+          const moods = Object.keys(moodSounds);
+          const mood = moods[Math.floor(Math.random() * moods.length)];
+          result.textContent = "Detected mood:" + mood;
+          stopAllSounds();
+          scanCompleteSound.play();
+          moodSounds[mood].play();
+          btn.disabled = false;
+        }, 4000);
+      } catch (err) {
+        console.warn("Camera blocked or unavailable:", err);
+
+        // Simulation mode
+        let dots = 0;
+        result.textContent = "🎧 Using simulation mode...";
+        stopAllSounds();
+        scanStartSound.play();
+
+        const fakeScan = setInterval(() => {
+          dots = (dots + 1) % 4;
+          result.textContent = "🔍 Scanning" + ".".repeat(dots);
+        }, 500);
+
+        setTimeout(() => {
+          clearInterval(fakeScan);
+          const moods = Object.keys(moodSounds);
+          const mood = moods[Math.floor(Math.random() * moods.length)];
+          result.textContent = "Detected mood: "+ mood + "(simulation mode)" ;
+          stopAllSounds();
+          scanCompleteSound.play();
+          moodSounds[mood].play();
+          btn.disabled = false;
+        }, 4000);
+      }
+    });
+  }
+</script>
+</body>
+</html>

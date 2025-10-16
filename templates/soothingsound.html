@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindOrbit - Soothing Sounds</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <style>
+    .sound-selector {
+      margin: 25px auto;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      width: 80%;
+      max-width: 500px;
+      box-shadow: 0 0 12px rgba(255, 0, 255, 0.3);
+    }
+    .sound-selector select,
+    .sound-selector button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(90deg, #ff00ff, #00ffe0);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .sound-selector button:hover {
+      transform: scale(1.05);
+    }
+
+    .sound-buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .sound-buttons button {
+      margin: 8px;
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(90deg, #00ffe0, #ff00ff);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .sound-buttons button:hover {
+      transform: scale(1.05);
+    }
+
+    main {
+      text-align: center;
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="bgCanvas"></canvas>
+  <a href="/moodgame" class="back-btn">⬅ Back</a>
+
+  <header>
+    <h1>🌌 MindOrbit</h1>
+    <nav>
+      <a href="/home">Home</a>
+      <a href="/chat">Chat</a>
+      <a href="/moodgame">Moodgames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/about">About</a>
+      <a href="/">Sign Up</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="futuristic-card">
+      <h2>🎧 Soothing Sounds Mixer</h2>
+      <p>Tap on any sound to create your own calming mix 🌌</p>
+
+      <!-- 🌟 Sound Aura Section -->
+      <div class="sound-selector">
+        <h3>🎶 Find Your Sound Aura</h3>
+        <p>Select your favorite soothing style:</p>
+        <select id="soundType">
+          <option value="rainy">🌧 Rainy Calm</option>
+          <option value="ocean">🌊 Ocean Breeze</option>
+          <option value="forest">🌳 Forest Escape</option>
+          <option value="warm">🔥 Warm Glow</option>
+          <option value="night">🌌 Night Sky</option>
+        </select>
+        <button onclick="playPreset()">Play My Aura</button>
+      </div>
+
+      <!-- Sound Buttons -->
+      <div class="sound-buttons">
+        <button onclick="toggleSound('piano')">🎹 Piano</button>
+        <button onclick="toggleSound('chimes')">🔔 Chimes</button>
+        <button onclick="toggleSound('forest')">🌲 Forest</button>
+        <button onclick="toggleSound('waves')">🌊 Waves</button>
+        <button onclick="toggleSound('asmr')">🎧 ASMR</button>
+        <button onclick="toggleSound('rain')">🌧 Rain</button>
+      </div>
+
+      <button onclick="stopAll()">⏹ Stop All</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
+  </footer>
+
+  <!-- JS Files -->
+  <script src="{{ url_for('static', filename='soothingsound.js') }}"></script>
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</body>
+</html>
