@@ -1,30 +1,19 @@
 (() => {
   // ===== Config =====
-  const COLORS = [
-    "#00E5FF", // cyan
-    "#FF3CF3", // magenta
-    "#FFB300", // amber
-    "#7CFF8A", // mint
-    "#A98BFF"  // violet
-  ];
+  const COLORS = ["#00E5FF", "#FF3CF3", "#FFB300", "#7CFF8A", "#A98BFF"];
   const START_GRID = 8;
   const START_MOVES = 30;
-  const SCORE_RULE = n => (n >= 3 ? (n - 2) * (n - 2) * 10 : 0); // rewards longer chains
+  const SCORE_RULE = n => (n >= 3 ? (n - 2) * (n - 2) * 10 : 0);
 
   // ===== State =====
   let rows = START_GRID, cols = START_GRID;
-  let grid = [];
-  let score = 0;
-  let moves = START_MOVES;
+  let grid = [], score = 0, moves = START_MOVES;
   let best = Number(localStorage.getItem("mindorbit_best") || 0);
-
-  let path = [];
-  let dragging = false;
-  let allowColor = null;
+  let path = [], dragging = false, allowColor = null;
 
   // ===== DOM =====
   const boardEl = document.getElementById("board");
-  boardEl.style.touchAction = "none"; // ✅ fixed typo (El not E1)
+  boardEl.style.touchAction = "none";
   const scoreEl = document.getElementById("score");
   const movesEl = document.getElementById("moves");
   const bestEl  = document.getElementById("best");
@@ -38,17 +27,15 @@
   pathCanvas.style.top = 0;
   pathCanvas.style.left = 0;
   pathCanvas.style.zIndex = 1;
-  pathCanvas.style.width ="100%";
+  pathCanvas.style.width = "100%";
   pathCanvas.style.height = "100%";
   boardEl.appendChild(pathCanvas);
-  
-  pathCanvas.width =boardE1.clientWidth;
-  pathCanvas.height =boardE1.clientHeight;
-  
-  pathCanvas.style.pointerEvents = "none"; // prevent blocking touches
- 
+
+  pathCanvas.width = boardEl.clientWidth;
+  pathCanvas.height = boardEl.clientHeight;
+  pathCanvas.style.pointerEvents = "none";
+
   const pCtx = pathCanvas.getContext("2d");
-  
 
   // ===== Helpers =====
   const inBounds = (r, c) => r >= 0 && c >= 0 && r < rows && c < cols;
@@ -67,7 +54,6 @@
     const cell = size / cols;
     boardEl.style.setProperty("--cell", cell + "px");
 
-    // High-DPI scaling
     const dpr = window.devicePixelRatio || 1;
     pathCanvas.style.width = size + "px";
     pathCanvas.style.height = size + "px";
@@ -162,10 +148,10 @@
     dragging = false;
 
     if (path.length >= 3) {
-     const cells = new Set(path.map(p => '${p.r},${p.c}'));
+      const cells = new Set(path.map(p => ${p.r},${p.c}));
       boardEl.querySelectorAll(".cell").forEach(cellEl => {
         const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
-       if (cells.has('${r},${c}')) {
+        if (cells.has(${r},${c})) {
           const dot = cellEl.firstChild;
           if (dot) dot.classList.add("clearing");
         }
@@ -200,17 +186,13 @@
   function collapseAndRefill() {
     for (let c = 0; c < cols; c++) {
       const stack = [];
-      for (let r = rows - 1; r >= 0; r--) {
-        if (grid[r][c]) stack.push(grid[r][c]);
-      }
+      for (let r = rows - 1; r >= 0; r--) if (grid[r][c]) stack.push(grid[r][c]);
       let r = rows - 1;
       while (stack.length) grid[r--][c] = stack.shift();
       while (r >= 0) grid[r--][c] = COLORS[(Math.random() * COLORS.length) | 0];
     }
   }
 
-  // ===== Events =====
-  // ===== Events =====
   function eventToCell(e) {
     const rect = boardEl.getBoundingClientRect();
     const cellSize = rect.width / cols;
@@ -227,45 +209,16 @@
     return { r: y, c: x };
   }
 
-  // Mouse support (desktop)
-  boardEl.addEventListener("mousedown", e => {
-    const { r, c } = eventToCell(e);
-    startDrag(r, c);
-  });
-  boardEl.addEventListener("mousemove", e => {
-    if (!dragging) return;
-    const { r, c } = eventToCell(e);
-    extendPath(r, c);
-  });
+  // Events
+  boardEl.addEventListener("mousedown", e => startDrag(...Object.values(eventToCell(e))));
+  boardEl.addEventListener("mousemove", e => { if (dragging) extendPath(...Object.values(eventToCell(e))); });
   window.addEventListener("mouseup", endDrag);
 
-  // Make sure the canvas doesn't swallow touches
-  pathCanvas.style.pointerEvents = "none";
-  boardEl.style.touchAction = "none"; // should already be set, keep it
+  boardEl.addEventListener("touchstart", e => { e.preventDefault(); startDrag(...Object.values(eventToCell(e))); }, { passive: false });
+  boardEl.addEventListener("touchmove", e => { e.preventDefault(); extendPath(...Object.values(eventToCell(e))); }, { passive: false });
+  window.addEventListener("touchend", e => { e.preventDefault(); endDrag(); }, { passive: false });
 
-  // Touch support (mobile) — use eventToCell so r,c match grid indexing
-  boardEl.addEventListener("touchstart", e => {
-    // prevent page scroll
-    e.preventDefault();
-    const { r, c } = eventToCell(e);
-    startDrag(r, c);
-  }, { passive: false });
-
-  boardEl.addEventListener("touchmove", e => {
-    e.preventDefault();
-    const { r, c } = eventToCell(e);
-    extendPath(r, c);
-  }, { passive: false });
-
-  window.addEventListener("touchend", e => {
-    e.preventDefault();
-    endDrag();
-  }, { passive: false });
-  gridSel.addEventListener("change", () => {
-    const v = parseInt(gridSel.value, 10);
-    rows = v; cols = v;
-    newGame();
-  });
+  gridSel.addEventListener("change", () => { rows = cols = parseInt(gridSel.value, 10); newGame(); });
   newBtn.addEventListener("click", newGame);
 
   function newGame() {
@@ -279,12 +232,6 @@
     render();
   }
 
-  window.addEventListener("resize", () => {
-    sizeBoard();
-    render();
-  });
-
-  // Boot
-  window.addEventListener("load", () => {
-    newGame();
-});
+  window.addEventListener("resize", () => { sizeBoard(); render(); });
+  window.addEventListener("load", newGame);
+})();
