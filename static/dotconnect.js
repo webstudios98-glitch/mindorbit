@@ -153,10 +153,10 @@
     dragging = false;
 
     if (path.length >= 3) {
-      const cells = new Set(path.map(p => '${p.r},${p.c}')); // ✅ fixed template string
+     const cells = new Set(path.map(p => ${p.r},${p.c}));
       boardEl.querySelectorAll(".cell").forEach(cellEl => {
         const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
-        if (cells.has('${r},${c}')) {
+       if (cells.has(${r},${c})) {
           const dot = cellEl.firstChild;
           if (dot) dot.classList.add("clearing");
         }
@@ -201,11 +201,12 @@
   }
 
   // ===== Events =====
+  // ===== Events =====
   function eventToCell(e) {
     const rect = boardEl.getBoundingClientRect();
     const cellSize = rect.width / cols;
     let clientX, clientY;
-    if (e.touches?.length) {
+    if (e.touches && e.touches.length) {
       clientX = e.touches[0].clientX;
       clientY = e.touches[0].clientY;
     } else {
@@ -217,36 +218,40 @@
     return { r: y, c: x };
   }
 
-  boardEl.addEventListener("mousedown", e => startDrag(...Object.values(eventToCell(e))));
-  boardEl.addEventListener("mousemove", e => dragging && extendPath(...Object.values(eventToCell(e))));
+  // Mouse support (desktop)
+  boardEl.addEventListener("mousedown", e => {
+    const { r, c } = eventToCell(e);
+    startDrag(r, c);
+  });
+  boardEl.addEventListener("mousemove", e => {
+    if (!dragging) return;
+    const { r, c } = eventToCell(e);
+    extendPath(r, c);
+  });
   window.addEventListener("mouseup", endDrag);
 
- boardEl.addEventListener("touchstart", e => {
-  const touch = e.touches[0];
-  const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  startDrag({ target });
-  e.preventDefault();
-}, { passive: false });
+  // Make sure the canvas doesn't swallow touches
+  pathCanvas.style.pointerEvents = "none";
+  boardEl.style.touchAction = "none"; // should already be set, keep it
 
-boardEl.addEventListener("touchmove", e => {
-  const touch = e.touches[0];
-  const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  moveDrag({ target });
-  e.preventDefault();
-}, { passive: false });
- boardEl.addEventListener('touchmove', e => {
-  e.preventDefault();
-  const touch = e.touches[0];
-  const target =
-document.elementFromPoint(touch.clientX,
-touch.clientY);
-  moveDrag(target);
-}, { passive: false });
-window.addEventListener("touchend", e => {
-  endDrag();
-  e.preventDefault();
-}, { passive: false });
+  // Touch support (mobile) — use eventToCell so r,c match grid indexing
+  boardEl.addEventListener("touchstart", e => {
+    // prevent page scroll
+    e.preventDefault();
+    const { r, c } = eventToCell(e);
+    startDrag(r, c);
+  }, { passive: false });
 
+  boardEl.addEventListener("touchmove", e => {
+    e.preventDefault();
+    const { r, c } = eventToCell(e);
+    extendPath(r, c);
+  }, { passive: false });
+
+  window.addEventListener("touchend", e => {
+    e.preventDefault();
+    endDrag();
+  }, { passive: false });
   gridSel.addEventListener("change", () => {
     const v = parseInt(gridSel.value, 10);
     rows = v; cols = v;
