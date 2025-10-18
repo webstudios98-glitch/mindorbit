@@ -234,9 +234,14 @@ boardEl.addEventListener("touchmove", e => {
   moveDrag({ target });
   e.preventDefault();
 }, { passive: false });
-  boardE1.addEventListner('touchmove', e =>
-    e.preventDefault(), {passive:false});
-
+ boardEl.addEventListener('touchmove', e => {
+  e.preventDefault();
+  const touch = e.touches[0];
+  const target =
+document.elementFromPoint(touch.clientX,
+touch.clientY);
+  moveDrag(target);
+}, { passive: false });
 window.addEventListener("touchend", e => {
   endDrag();
   e.preventDefault();
