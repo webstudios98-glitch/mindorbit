@@ -697,7 +697,11 @@ button:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; /*lowered so dots appear above */
+   pointer-events: none; /* allows clicks/touches to pass through */
+}
+.dot {
+   position: relative;
+  z-index: 10; /*ensure dots appear above the canvas */
 }
 
 
