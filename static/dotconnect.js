@@ -271,13 +271,3 @@ boardEl.addEventListener("touchmove", e => {
   // Boot
   newGame();
 })();
-/* === Connect the Dots Canvas Fix (for mobile touch) === */
-#pathCanvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-  pointer-events: none; /* lets touches go through the canvas */
-}
