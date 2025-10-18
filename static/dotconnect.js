@@ -37,6 +37,30 @@
   const pCtx = pathCanvas.getContext("2d");
   boardEl.appendChild(pathCanvas);
 
+  const canvas = document.getElementById("dotCanvas");
+const ctx = canvas.getContext("2d");
+
+// Ensure correct canvas scaling on mobile
+const scaleCanvas = () => {
+  canvas.width = window.innerWidth * 0.9;
+  canvas.height = window.innerHeight * 0.6;
+};
+window.addEventListener("resize", scaleCanvas);
+scaleCanvas();
+
+// --- your existing dot connect code ---
+const dots = [];
+for (let i = 0; i < 80; i++) {
+  dots.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.8,
+    vy: (Math.random() - 0.5) * 0.8
+  });
+}
+
+// ... drawDots(), drawLines(), animate(), etc.
+
   // ===== Helpers =====
   const inBounds = (r, c) => r >= 0 && c >= 0 && r < rows && c < cols;
   const neighbors = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
