@@ -13,12 +13,11 @@
 
   // ===== State =====
   let rows = START_GRID, cols = START_GRID;
-  let grid = [];            // grid[r][c] = color string or null
+  let grid = [];            
   let score = 0;
   let moves = START_MOVES;
   let best = Number(localStorage.getItem("mindorbit_best") || 0);
 
-  // selection path: array of {r,c,color}
   let path = [];
   let dragging = false;
   let allowColor = null;
@@ -37,30 +36,6 @@
   const pCtx = pathCanvas.getContext("2d");
   boardEl.appendChild(pathCanvas);
 
-  const canvas = document.getElementById("dotCanvas");
-const ctx = canvas.getContext("2d");
-
-// Ensure correct canvas scaling on mobile
-const scaleCanvas = () => {
-  canvas.width = window.innerWidth * 0.9;
-  canvas.height = window.innerHeight * 0.6;
-};
-window.addEventListener("resize", scaleCanvas);
-scaleCanvas();
-
-// --- your existing dot connect code ---
-const dots = [];
-for (let i = 0; i < 80; i++) {
-  dots.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.8,
-    vy: (Math.random() - 0.5) * 0.8
-  });
-}
-
-// ... drawDots(), drawLines(), animate(), etc.
-
   // ===== Helpers =====
   const inBounds = (r, c) => r >= 0 && c >= 0 && r < rows && c < cols;
   const neighbors = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
@@ -72,16 +47,21 @@ for (let i = 0; i < 80; i++) {
   }
 
   function sizeBoard() {
-    // Square board that fits well; fall back to CSS @media for mobile
+    // Square board that fits well
     const size = Math.min(560, Math.max(340, Math.floor(window.innerWidth * 0.6)));
     boardEl.style.width = size + "px";
     boardEl.style.height = size + "px";
     const cell = size / cols;
-    boardEl.style.setProperty("--cell", `${cell}px`);
+    boardEl.style.setProperty("--cell", ${cell}px);
 
-    // position the canvas
-    pathCanvas.width = size;
-    pathCanvas.height = size;
+    // High-DPI scaling for canvas
+    const dpr = window.devicePixelRatio || 1;
+    pathCanvas.style.width = size + "px";
+    pathCanvas.style.height = size + "px";
+    pathCanvas.width = Math.round(size * dpr);
+    pathCanvas.height = Math.round(size * dpr);
+    pCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    pCtx.clearRect(0, 0, size, size);
   }
 
   function cellToPixels(r, c) {
@@ -90,7 +70,6 @@ for (let i = 0; i < 80; i++) {
   }
 
   function render() {
-    // clear board children (cells will be rebuilt)
     boardEl.querySelectorAll(".cell").forEach(n => n.remove());
 
     const cell = parseFloat(getComputedStyle(boardEl).getPropertyValue("--cell"));
@@ -107,9 +86,8 @@ for (let i = 0; i < 80; i++) {
 
         const dot = document.createElement("div");
         dot.className = "dot";
-        dot.style.color = color;
+        dot.style.backgroundColor = color; // fixed (was .color before)
 
-        // mark selected ones
         if (path.find(p => p.r === r && p.c === c)) dot.classList.add("selected");
 
         cellEl.appendChild(dot);
@@ -120,13 +98,16 @@ for (let i = 0; i < 80; i++) {
   }
 
   function redrawPath() {
-    pCtx.clearRect(0, 0, pathCanvas.width, pathCanvas.height);
+    const sizeCSS = parseFloat(getComputedStyle(boardEl).width);
+    pCtx.clearRect(0, 0, sizeCSS, sizeCSS);
     if (path.length < 2) return;
-    pCtx.lineWidth = Math.max(6, Math.floor(pathCanvas.width / cols * 0.18));
+
+    const cellSize = parseFloat(getComputedStyle(boardEl).getPropertyValue("--cell"));
+    pCtx.lineWidth = Math.max(6, Math.floor(cellSize * 0.18));
     pCtx.lineCap = "round";
     pCtx.shadowBlur = 12;
-    pCtx.strokeStyle = allowColor || "#fff";
-    pCtx.shadowColor = allowColor || "#fff";
+    pCtx.strokeStyle = allowColor || (path[0] && path[0].color) || "#fff";
+    pCtx.shadowColor = pCtx.strokeStyle;
 
     pCtx.beginPath();
     const first = cellToPixels(path[0].r, path[0].c);
@@ -153,13 +134,11 @@ for (let i = 0; i < 80; i++) {
     if (color !== allowColor) return;
 
     const last = path[path.length - 1];
-    // backtrack one step
     if (path.length >= 2 && r === path[path.length - 2].r && c === path[path.length - 2].c) {
       path.pop();
       render();
       return;
     }
-    // ignore if already in path (no squares rule for simplicity)
     if (path.some(p => p.r === r && p.c === c)) return;
     if (!neighbors(last, { r, c })) return;
 
@@ -172,30 +151,25 @@ for (let i = 0; i < 80; i++) {
     dragging = false;
 
     if (path.length >= 3) {
-      // clear selected
-      const cells = new Set(path.map(p => `${p.r},${p.c}`));
-      // Animate dots (fade out)
+      const cells = new Set(path.map(p => ${p.r},${p.c}));
       boardEl.querySelectorAll(".cell").forEach(cellEl => {
         const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
-        if (cells.has(`${r},${c}`)) {
+        if (cells.has(${r},${c})) {
           const dot = cellEl.firstChild;
           dot.classList.add("clearing");
         }
       });
 
-      // scoring
       const gained = SCORE_RULE(path.length);
       score += gained;
       scoreEl.textContent = score;
 
-      // apply clear after short delay to show animation
       setTimeout(() => {
         path.forEach(({ r, c }) => (grid[r][c] = null));
         collapseAndRefill();
         moves = Math.max(0, moves - 1);
         movesEl.textContent = moves;
 
-        // best tracking
         if (score > best) {
           best = score;
           localStorage.setItem("mindorbit_best", best);
@@ -206,7 +180,6 @@ for (let i = 0; i < 80; i++) {
         render();
       }, 120);
     } else {
-      // not enough: just reset path, no move consumed
       path = [];
       allowColor = null;
       render();
@@ -214,7 +187,6 @@ for (let i = 0; i < 80; i++) {
   }
 
   function collapseAndRefill() {
-    // for each column, slide down non-null and add new at top
     for (let c = 0; c < cols; c++) {
       const stack = [];
       for (let r = rows - 1; r >= 0; r--) {
@@ -228,7 +200,7 @@ for (let i = 0; i < 80; i++) {
     }
   }
 
-  // ===== Event Binding on board =====
+  // ===== Event Bindings =====
   function eventToCell(e) {
     const rect = boardEl.getBoundingClientRect();
     const cellSize = rect.width / cols;
@@ -250,7 +222,6 @@ for (let i = 0; i < 80; i++) {
   });
   window.addEventListener("mouseup", endDrag);
 
-  // Touch
   boardEl.addEventListener("touchstart", e => {
     const { r, c } = eventToCell(e);
     startDrag(r, c);
@@ -262,7 +233,6 @@ for (let i = 0; i < 80; i++) {
   }, { passive: false });
   window.addEventListener("touchend", endDrag);
 
-  // ===== UI Controls =====
   gridSel.addEventListener("change", () => {
     const v = parseInt(gridSel.value, 10);
     rows = v; cols = v;
@@ -281,7 +251,6 @@ for (let i = 0; i < 80; i++) {
     render();
   }
 
-  // Resize handling
   window.addEventListener("resize", () => {
     sizeBoard();
     render();
