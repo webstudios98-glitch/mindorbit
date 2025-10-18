@@ -7,9 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LexiLink — Word Builder</title>
 
-  <!-- ✅ Link your CSS here -->
+  <!-- CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='lexilink.css') }}">
-   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -24,10 +23,12 @@
     <p id="timer">⏳ 60s</p>
     <p id="score">Score: 0</p>
     <p id="message"></p>
+
+    <!-- ✅ Back button -->
+    <button id="backBtn" onclick="window.location.href='/games'">⬅ Back</button>
   </div>
 
-  <!-- ✅ JS linked here -->
+  <!-- JS -->
   <script src="{{ url_for('static', filename='lexilink.js') }}"></script>
-
 </body>
 </html>
