@@ -151,25 +151,26 @@
     dragging = false;
 
     if (path.length >= 3) {
-      const cells = new Set(path.map(p => ${p.r},${p.c}));
-      boardEl.querySelectorAll(".cell").forEach(cellEl => {
-        const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
-        if (cells.has(${r},${c})) {
-          const dot = cellEl.firstChild;
-          dot.classList.add("clearing");
-        }
-      });
+  const cells = new Set(path.map(p => ${p.r},${p.c})); // ✅ store as string keys
+  boardEl.querySelectorAll(".cell").forEach(cellEl => {
+    const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
+    if (cells.has(${r},${c})) { // ✅ same format here
+      const dot = cellEl.firstChild;
+      dot.classList.add("clearing");
+    }
+  });
 
-      const gained = SCORE_RULE(path.length);
-      score += gained;
-      scoreEl.textContent = score;
+  const gained = SCORE_RULE(path.length);
+  score += gained;
+  scoreEl.textContent = score;
 
-      setTimeout(() => {
-        path.forEach(({ r, c }) => (grid[r][c] = null));
-        collapseAndRefill();
-        moves = Math.max(0, moves - 1);
-        movesEl.textContent = moves;
-
+  setTimeout(() => {
+    path.forEach(({ r, c }) => (grid[r][c] = null));
+    collapseAndRefill();
+    moves = Math.max(0, moves - 1);
+    movesEl.textContent = moves;
+  }, 250);
+    }
         if (score > best) {
           best = score;
           localStorage.setItem("mindorbit_best", best);
