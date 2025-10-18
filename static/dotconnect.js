@@ -1,3 +1,4 @@
+let grid = [];
 (() => {
   // ===== Config =====
   const COLORS = ["#00E5FF", "#FF3CF3", "#FFB300", "#7CFF8A", "#A98BFF"];
@@ -7,7 +8,8 @@
 
   // ===== State =====
   let rows = START_GRID, cols = START_GRID;
-  let grid = [], score = 0, moves = START_MOVES;
+  score = 0;
+  moves = START_MOVES;
   let best = Number(localStorage.getItem("mindorbit_best") || 0);
   let path = [], dragging = false, allowColor = null;
 
