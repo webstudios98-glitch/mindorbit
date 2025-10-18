@@ -705,6 +705,7 @@ button:hover {
 }
 /* === Fix mobile drag not connecting === */
 #board {
+   position: relative;
   touch-action: none;         /* prevent scrolling instead of dragging */
   -webkit-user-select: none;  /* block long-press highlight */
   user-select: none;
