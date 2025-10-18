@@ -165,6 +165,9 @@ def quotesoracle():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+ @app route("/lexilink")
+def lexilink():
+    return render_template("lexilink.html")
 
 
 
