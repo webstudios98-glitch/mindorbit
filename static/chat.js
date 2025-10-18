@@ -36,11 +36,11 @@
 
   async function sendToServer(message) {
     try {
-      const res = await fetch("/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message })
-      });
+     const res = await fetch("https://mindorbit-xqaq.onrender.com/chat", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ message })
+});
       if (!res.ok) {
         const txt = await res.text().catch(()=>res.statusText);
         throw new Error("Server returned " + res.status + " - " + txt);
