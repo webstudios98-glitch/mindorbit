@@ -13,7 +13,7 @@
 
   // ===== State =====
   let rows = START_GRID, cols = START_GRID;
-  let grid = [];            
+  let grid = [];
   let score = 0;
   let moves = START_MOVES;
   let best = Number(localStorage.getItem("mindorbit_best") || 0);
@@ -48,7 +48,7 @@
 
   function sizeBoard() {
     // Square board that fits well
-    const size = Math.min(560, Math.max(340, Math.floor(window.innerWidth * 0.6)));
+    const size = Math.min(560, Math.max(340, Math.floor(window.innerWidth * 0.8)));
     boardEl.style.width = size + "px";
     boardEl.style.height = size + "px";
     const cell = size / cols;
@@ -86,7 +86,7 @@
 
         const dot = document.createElement("div");
         dot.className = "dot";
-        dot.style.backgroundColor = color; // fixed (was .color before)
+        dot.style.backgroundColor = color;
 
         if (path.find(p => p.r === r && p.c === c)) dot.classList.add("selected");
 
