@@ -153,10 +153,10 @@
     dragging = false;
 
     if (path.length >= 3) {
-     const cells = new Set(path.map(p => ${p.r},${p.c}));
+     const cells = new Set(path.map(p => '${p.r},${p.c}'));
       boardEl.querySelectorAll(".cell").forEach(cellEl => {
         const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
-       if (cells.has(${r},${c})) {
+       if (cells.has('${r},${c}')) {
           const dot = cellEl.firstChild;
           if (dot) dot.classList.add("clearing");
         }
