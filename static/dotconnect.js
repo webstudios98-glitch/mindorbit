@@ -24,6 +24,7 @@
 
   // DOM
   const boardEl = document.getElementById("board");
+  boardE1.style.touchAction = "none";
   const scoreEl = document.getElementById("score");
   const movesEl = document.getElementById("moves");
   const bestEl  = document.getElementById("best");
