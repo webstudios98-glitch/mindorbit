@@ -22,9 +22,9 @@
   let dragging = false;
   let allowColor = null;
 
-  // DOM
+  // ===== DOM =====
   const boardEl = document.getElementById("board");
-  boardE1.style.touchAction = "none";
+  boardEl.style.touchAction = "none"; // ✅ fixed typo (El not E1)
   const scoreEl = document.getElementById("score");
   const movesEl = document.getElementById("moves");
   const bestEl  = document.getElementById("best");
@@ -34,6 +34,10 @@
   // Canvas for connection lines
   const pathCanvas = document.createElement("canvas");
   pathCanvas.id = "pathCanvas";
+  pathCanvas.style.position = "absolute";
+  pathCanvas.style.top = 0;
+  pathCanvas.style.left = 0;
+  pathCanvas.style.zIndex = 1;
   const pCtx = pathCanvas.getContext("2d");
   boardEl.appendChild(pathCanvas);
 
@@ -48,15 +52,13 @@
   }
 
   function sizeBoard() {
-    // Square board that fits well
     const size = Math.min(560, Math.max(340, Math.floor(window.innerWidth * 0.6)));
     boardEl.style.width = size + "px";
     boardEl.style.height = size + "px";
     const cell = size / cols;
-    // === FIX: don't use template placeholder here, just set a string value
     boardEl.style.setProperty("--cell", cell + "px");
 
-    // High-DPI scaling for canvas
+    // High-DPI scaling
     const dpr = window.devicePixelRatio || 1;
     pathCanvas.style.width = size + "px";
     pathCanvas.style.height = size + "px";
@@ -72,7 +74,6 @@
   }
 
   function render() {
-    // remove old cells
     boardEl.querySelectorAll(".cell").forEach(n => n.remove());
 
     const cell = parseFloat(getComputedStyle(boardEl).getPropertyValue("--cell"));
@@ -101,8 +102,6 @@
   }
 
   function redrawPath() {
-    const sizeCSS = parseFloat(getComputedStyle(boardEl).width);
-    // clear using canvas actual pixel area (we already set transform for DPR)
     pCtx.clearRect(0, 0, pathCanvas.width, pathCanvas.height);
     if (path.length < 2) return;
 
@@ -132,8 +131,7 @@
   }
 
   function extendPath(r, c) {
-    if (!dragging) return;
-    if (!inBounds(r, c)) return;
+    if (!dragging || !inBounds(r, c)) return;
     const color = grid[r][c];
     if (color !== allowColor) return;
 
@@ -155,11 +153,10 @@
     dragging = false;
 
     if (path.length >= 3) {
-      // === FIX: store coords as simple string keys in Set
-      const cells = new Set(path.map(p => '${p.r},${p.c}'));
+      const cells = new Set(path.map(p => ${p.r},${p.c})); // ✅ fixed template string
       boardEl.querySelectorAll(".cell").forEach(cellEl => {
         const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
-        if (cells.has('${r},${c}')) {
+        if (cells.has(${r},${c})) {
           const dot = cellEl.firstChild;
           if (dot) dot.classList.add("clearing");
         }
@@ -199,18 +196,16 @@
       }
       let r = rows - 1;
       while (stack.length) grid[r--][c] = stack.shift();
-      while (r >= 0) {
-        grid[r--][c] = COLORS[(Math.random() * COLORS.length) | 0];
-      }
+      while (r >= 0) grid[r--][c] = COLORS[(Math.random() * COLORS.length) | 0];
     }
   }
 
-  // ===== Event Bindings =====
+  // ===== Events =====
   function eventToCell(e) {
     const rect = boardEl.getBoundingClientRect();
     const cellSize = rect.width / cols;
     let clientX, clientY;
-    if (e.touches && e.touches.length) {
+    if (e.touches?.length) {
       clientX = e.touches[0].clientX;
       clientY = e.touches[0].clientY;
     } else {
@@ -222,28 +217,20 @@
     return { r: y, c: x };
   }
 
-  boardEl.addEventListener("mousedown", e => {
-    const { r, c } = eventToCell(e);
-    startDrag(r, c);
-  });
-  boardEl.addEventListener("mousemove", e => {
-    if (!dragging) return;
-    const { r, c } = eventToCell(e);
-    extendPath(r, c);
-  });
+  boardEl.addEventListener("mousedown", e => startDrag(...Object.values(eventToCell(e))));
+  boardEl.addEventListener("mousemove", e => dragging && extendPath(...Object.values(eventToCell(e))));
   window.addEventListener("mouseup", endDrag);
 
   boardEl.addEventListener("touchstart", e => {
-  e.preventDefault();
-  const { r, c } = eventToCell(e);
-  startDrag(r, c);
-}, { passive: false });
+    e.preventDefault();
+    startDrag(...Object.values(eventToCell(e)));
+  }, { passive: false });
 
-boardEl.addEventListener("touchmove", e => {
-  e.preventDefault();
-  const { r, c } = eventToCell(e);
-  extendPath(r, c);
-}, { passive: false });
+  boardEl.addEventListener("touchmove", e => {
+    e.preventDefault();
+    extendPath(...Object.values(eventToCell(e)));
+  }, { passive: false });
+
   window.addEventListener("touchend", endDrag);
 
   gridSel.addEventListener("change", () => {
