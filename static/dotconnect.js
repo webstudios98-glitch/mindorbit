@@ -48,11 +48,12 @@
 
   function sizeBoard() {
     // Square board that fits well
-    const size = Math.min(560, Math.max(340, Math.floor(window.innerWidth * 0.8)));
+    const size = Math.min(560, Math.max(340, Math.floor(window.innerWidth * 0.6)));
     boardEl.style.width = size + "px";
     boardEl.style.height = size + "px";
     const cell = size / cols;
-    boardEl.style.setProperty("--cell", ${cell}px);
+    // === FIX: don't use template placeholder here, just set a string value
+    boardEl.style.setProperty("--cell", cell + "px");
 
     // High-DPI scaling for canvas
     const dpr = window.devicePixelRatio || 1;
@@ -70,6 +71,7 @@
   }
 
   function render() {
+    // remove old cells
     boardEl.querySelectorAll(".cell").forEach(n => n.remove());
 
     const cell = parseFloat(getComputedStyle(boardEl).getPropertyValue("--cell"));
@@ -99,7 +101,8 @@
 
   function redrawPath() {
     const sizeCSS = parseFloat(getComputedStyle(boardEl).width);
-    pCtx.clearRect(0, 0, sizeCSS, sizeCSS);
+    // clear using canvas actual pixel area (we already set transform for DPR)
+    pCtx.clearRect(0, 0, pathCanvas.width, pathCanvas.height);
     if (path.length < 2) return;
 
     const cellSize = parseFloat(getComputedStyle(boardEl).getPropertyValue("--cell"));
@@ -151,26 +154,26 @@
     dragging = false;
 
     if (path.length >= 3) {
-  const cells = new Set(path.map(p => ${p.r},${p.c})); // ✅ store as string keys
-  boardEl.querySelectorAll(".cell").forEach(cellEl => {
-    const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
-    if (cells.has(${r},${c})) { // ✅ same format here
-      const dot = cellEl.firstChild;
-      dot.classList.add("clearing");
-    }
-  });
+      // === FIX: store coords as simple string keys in Set
+      const cells = new Set(path.map(p => ${p.r},${p.c}));
+      boardEl.querySelectorAll(".cell").forEach(cellEl => {
+        const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
+        if (cells.has(${r},${c})) {
+          const dot = cellEl.firstChild;
+          if (dot) dot.classList.add("clearing");
+        }
+      });
 
-  const gained = SCORE_RULE(path.length);
-  score += gained;
-  scoreEl.textContent = score;
+      const gained = SCORE_RULE(path.length);
+      score += gained;
+      scoreEl.textContent = score;
 
-  setTimeout(() => {
-    path.forEach(({ r, c }) => (grid[r][c] = null));
-    collapseAndRefill();
-    moves = Math.max(0, moves - 1);
-    movesEl.textContent = moves;
-  }, 250);
-    }
+      setTimeout(() => {
+        path.forEach(({ r, c }) => (grid[r][c] = null));
+        collapseAndRefill();
+        moves = Math.max(0, moves - 1);
+        movesEl.textContent = moves;
+
         if (score > best) {
           best = score;
           localStorage.setItem("mindorbit_best", best);
@@ -205,8 +208,14 @@
   function eventToCell(e) {
     const rect = boardEl.getBoundingClientRect();
     const cellSize = rect.width / cols;
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    let clientX, clientY;
+    if (e.touches && e.touches.length) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
     const x = Math.floor((clientX - rect.left) / cellSize);
     const y = Math.floor((clientY - rect.top) / cellSize);
     return { r: y, c: x };
