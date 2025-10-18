@@ -216,9 +216,18 @@ let grid = [];
   boardEl.addEventListener("mousemove", e => { if (dragging) extendPath(...Object.values(eventToCell(e))); });
   window.addEventListener("mouseup", endDrag);
 
-  boardEl.addEventListener("touchstart", e => { e.preventDefault(); startDrag(...Object.values(eventToCell(e))); }, { passive: false });
-  boardEl.addEventListener("touchmove", e => { e.preventDefault(); extendPath(...Object.values(eventToCell(e))); }, { passive: false });
-  window.addEventListener("touchend", e => { e.preventDefault(); endDrag(); }, { passive: false });
+  boardEl.addEventListener("touchstart", e => {
+    e.preventDefault(); 
+    startDrag(...Object.values(eventToCell(e)));
+  }, { passive: false });
+  boardEl.addEventListener("touchmove", e => {
+    e.preventDefault();
+    extendPath(...Object.values(eventToCell(e)));
+  }, { passive: false });
+  window.addEventListener("touchend", e => {
+    e.preventDefault();
+    endDrag();
+  }, { passive: false });
 
   gridSel.addEventListener("change", () => { rows = cols = parseInt(gridSel.value, 10); newGame(); });
   newBtn.addEventListener("click", newGame);
