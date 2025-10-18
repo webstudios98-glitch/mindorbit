@@ -155,7 +155,7 @@
 
     if (path.length >= 3) {
       // === FIX: store coords as simple string keys in Set
-      const cells = new Set(path.map(p => ${p.r},${p.c}));
+      const cells = new Set(path.map(p => '${p.r},${p.c}'));
       boardEl.querySelectorAll(".cell").forEach(cellEl => {
         const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
         if (cells.has(${r},${c})) {
