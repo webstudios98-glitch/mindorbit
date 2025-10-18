@@ -703,5 +703,11 @@ button:hover {
    position: relative;
   z-index: 10; /*ensure dots appear above the canvas */
 }
-
+/* === Fix mobile drag not connecting === */
+#board {
+  touch-action: none;         /* prevent scrolling instead of dragging */
+  -webkit-user-select: none;  /* block long-press highlight */
+  user-select: none;
+  -webkit-touch-callout: none;
+}
 
