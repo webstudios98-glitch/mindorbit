@@ -234,6 +234,8 @@ boardEl.addEventListener("touchmove", e => {
   moveDrag({ target });
   e.preventDefault();
 }, { passive: false });
+  boardE1.addEventListner('touchmove', e =>
+    e.preventDefault(), {passive:false});
 
 window.addEventListener("touchend", e => {
   endDrag();
