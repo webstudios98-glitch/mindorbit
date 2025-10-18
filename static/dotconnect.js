@@ -285,6 +285,6 @@
   });
 
   // Boot
-  (() => {
-  newGame();
-})();
+  window.addEventListener("load", () => {
+    newGame();
+});
