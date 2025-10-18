@@ -34,15 +34,19 @@
   // Canvas for connection lines
   const pathCanvas = document.createElement("canvas");
   pathCanvas.id = "pathCanvas";
-  pathCanvas.width = boardE1.clientWidth;
-  pathCanvas.height = boardE1.clientHeight;
   pathCanvas.style.position = "absolute";
   pathCanvas.style.top = 0;
   pathCanvas.style.left = 0;
-  pathCanvas.style.zIndex = 2;
-  pathCanvas.style.pointerEvents = "none"; // prevent blocking touches
+  pathCanvas.style.zIndex = 1;
+  pathCanvas.style.width ="100%";
+  pathCanvas.style.height = "100%";
   boardEl.appendChild(pathCanvas);
   
+  pathCanvas.width =boardE1.clientWidth;
+  pathCanvas.height =boardE1.clientHeight;
+  
+  pathCanvas.style.pointerEvents = "none"; // prevent blocking touches
+ 
   const pCtx = pathCanvas.getContext("2d");
   
 
@@ -281,5 +285,6 @@
   });
 
   // Boot
+  (() => {
   newGame();
 })();
