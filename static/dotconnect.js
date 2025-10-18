@@ -34,12 +34,17 @@
   // Canvas for connection lines
   const pathCanvas = document.createElement("canvas");
   pathCanvas.id = "pathCanvas";
+  pathCanvas.width = boardE1.clientWidth;
+  pathCanvas.height = boardE1.clientHeight;
   pathCanvas.style.position = "absolute";
   pathCanvas.style.top = 0;
   pathCanvas.style.left = 0;
-  pathCanvas.style.zIndex = 1;
-  const pCtx = pathCanvas.getContext("2d");
+  pathCanvas.style.zIndex = 2;
+  pathCanvas.style.pointerEvents = "none"; // prevent blocking touches
   boardEl.appendChild(pathCanvas);
+  
+  const pCtx = pathCanvas.getContext("2d");
+  
 
   // ===== Helpers =====
   const inBounds = (r, c) => r >= 0 && c >= 0 && r < rows && c < cols;
