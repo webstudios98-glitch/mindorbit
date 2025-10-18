@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Word Maker — MindOrbit</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-  {% include 'navbar.html' %}
-  <div class="game-container">
-    <h1>🧩 Word Maker</h1>
-    <p id="letters"></p>
-    <input id="wordInput" placeholder="Type your word..." />
-    <button onclick="checkWord()">Submit</button>
-    <p id="message"></p>
-    <p>Score: <span id="score">0</span></p>
-  </div>
-  <script src="{{ url_for('static', filename='lexilink.js') }}"></script>
-</body>
-</html>
+{% include 'navbar.html' %}
+<div class="game-container">
+  <h2>🧩 LexiLink — Word Builder</h2>
+  <div id="letters" class="letters"></div>
+  <input id="wordInput" type="text" placeholder="Type a word..." autofocus />
+  <button id="submitWord">Submit</button>
+  <p id="timer">⏱ 60s</p>
+  <p id="score">Score: 0</p>
+  <p id="message"></p>
+</div>
+
+<script src="{{ url_for('static', filename='lexilink.js') }}"></script>
