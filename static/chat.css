@@ -139,3 +139,71 @@ header nav a.active { text-decoration:underline; opacity:0.95; }
   .messages { max-height: 300px; min-height:180px; }
   .controls input[type="text"]{ font-size:0.95rem; padding:10px; }
 }
+/* ------------------  MOBILE RESPONSIVE FIXES ------------------ */
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Navbar and logo alignment */
+  nav, .navbar, .topbar {
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .navbar a {
+    font-size: 14px;
+    margin: 4px 6px;
+  }
+
+  /* Back button spacing */
+  .back-btn, .back-button {
+    position: relative;
+    top: 8px !important;
+    left: 4px !important;
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  /* Title adjustments */
+  h1, h2, h3 {
+    font-size: 1.3rem;
+  }
+
+  /* Quote box / cards */
+  .quote-box, .game-card {
+    width: 90%;
+    margin: 10px auto;
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  /* Button sizing */
+  button, .btn, .start-btn {
+    font-size: 15px;
+    padding: 10px 20px;
+    border-radius: 8px;
+  }
+
+  /* Breathing circle */
+  .circle {
+    width: 160px !important;
+    height: 160px !important;
+  }
+
+  /* Fix for Dot Connect canvas scaling */
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Quote Oracle layout */
+  .quote-card {
+    width: 90%;
+    text-align: center;
+    margin: auto;
+  }
+}
