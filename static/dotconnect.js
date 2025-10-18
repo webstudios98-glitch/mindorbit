@@ -233,14 +233,16 @@
   window.addEventListener("mouseup", endDrag);
 
   boardEl.addEventListener("touchstart", e => {
-    const { r, c } = eventToCell(e);
-    startDrag(r, c);
-  }, { passive: false });
-  boardEl.addEventListener("touchmove", e => {
-    e.preventDefault();
-    const { r, c } = eventToCell(e);
-    extendPath(r, c);
-  }, { passive: false });
+  e.preventDefault();
+  const { r, c } = eventToCell(e);
+  startDrag(r, c);
+}, { passive: false });
+
+boardEl.addEventListener("touchmove", e => {
+  e.preventDefault();
+  const { r, c } = eventToCell(e);
+  extendPath(r, c);
+}, { passive: false });
   window.addEventListener("touchend", endDrag);
 
   gridSel.addEventListener("change", () => {
