@@ -2,12 +2,14 @@ from dotenv import load_dotenv
 load_dotenv()
 # app.py — Robust AI Mini for MindOrbit
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 import os, requests, traceback
 
 # ------------------------------------------------------
 # Flask Setup
 # ------------------------------------------------------
 app = Flask(__name__, template_folder="templates", static_folder="static")
+CORS(app, origins=["https://mindorbit.in","https://www.mindorbit.in"])
 
 # ------------------------------------------------------
 # API Setup — using OpenRouter + DeepSeek
