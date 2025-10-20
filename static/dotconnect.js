@@ -249,7 +249,7 @@ pathCanvas.addEventListener("touchend", e => {
   window.addEventListener("load", newGame);
 })();
 // --- Mobile touch support ---
-const gameBoard = document.querySelector('.game-board');
+const gameBoard = document.querySelector("#dot-board");
 gameBoard.style.display = 'flex';
 gameBoard.style.justifyContent = 'center';
 gameBoard.style.alignItems = 'center';
