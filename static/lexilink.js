@@ -17,6 +17,28 @@
   const NODE_COUNT = 8; // number of letters around the circle
 
   let currentLetters = [];
+  // --- Smarter Letter Generator ---
+const wordPool = [
+  "CODE", "AI", "BRAIN", "LOGIC", "NEON", "MIND", "WORD", "LIGHT", "DATA",
+  "SPACE", "ENERGY", "SHAPE", "FORM", "PIXEL", "SOUND", "LINK", "CLOUD",
+  "SMART", "BUILD", "GLOW", "HEART", "POWER", "TECH", "CYBER", "WAVE",
+  "CORE", "NODE", "SPARK", "DREAM", "PLAY"
+];
+
+function generatePlayableLetters() {
+  // Pick a random real word from the pool
+  const baseWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+  const letters = baseWord.split("");
+
+  // Add random extras until 8 letters total
+  const extras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  while (letters.length < 8) {
+    letters.push(extras[Math.floor(Math.random() * extras.length)]);
+  }
+
+  // Shuffle the letters
+  return letters.sort(() => Math.random() - 0.5);
+}
   let currentWord = "";
   let score = 0;
   let timer = GAME_TIME;
@@ -24,10 +46,11 @@
   let timerInterval = null;
 
   // ---- INIT ----
-  function init() {
-    generateLetters();
-    renderLetters();
-    startTimer();
+function init() {
+  currentLetters = generatePlayableLetters();
+  renderLetters();
+  startTimer();
+}
 
     submitBtn.addEventListener("click", submitWord);
     clearBtn.addEventListener("click", clearWord);
