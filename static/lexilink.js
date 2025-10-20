@@ -65,7 +65,7 @@
       const y = center + radius * Math.sin(angle);
 
       const node = document.createElement("div");
-      node.className = letter-node `${letter.color}`;
+      node.className = `letter-node ${letter.color}`;
       node.style.left = `${x - 32}px`;
       node.style.top = `${y - 32}px`;
       node.dataset.letter = letter.ch;
