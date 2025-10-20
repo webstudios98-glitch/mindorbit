@@ -768,6 +768,3 @@ canvas#lineCanvas {
   user-select: none;
 }
 
-body {
-  overflow: hidden; /* Prevents page moving on drag */
-}
