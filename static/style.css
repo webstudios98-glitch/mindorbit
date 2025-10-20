@@ -757,4 +757,17 @@ canvas#lineCanvas {
   pointer-events: none;
   z-index: 2;
 }
+/* --- Dot Connect Mobile Fix --- */
+#dotconnect, .dotconnect, .dot-game, .dot-board, .game-board {
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: none;
+  user-select: none;
+}
 
+body {
+  overflow: hidden; /* Prevents page moving on drag */
+}
