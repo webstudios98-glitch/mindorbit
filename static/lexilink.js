@@ -7,14 +7,14 @@
   const timerEl = document.getElementById("timer");
   const scoreEl = document.getElementById("score");
   const msgEl = document.getElementById("message");
-  const pingSound = document.getElementById('pingSound'); 
-  
+  const pingSound = document.getElementById("pingSound");
+
   // ---- CONFIG ----
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const GAME_TIME = 60;
   const NODE_COLORS = ["c0", "c1", "c2", "c3", "c4"];
   const WORDS = ["CODE", "AI", "BRAIN", "LOGIC", "NEON", "MIND", "WORD", "LIGHT", "DATA", "TECH"];
-  const NODE_COUNT = 8; // number of letters around the circle
+  const NODE_COUNT = 8;
 
   let currentLetters = [];
   let currentWord = "";
@@ -66,7 +66,7 @@
       const y = center + radius * Math.sin(angle);
 
       const node = document.createElement("div");
-      node.className = `letter-node ${letter.color}`;
+      node.className = letter-node ${letter.color};
       node.style.left = ${x - 32}px;
       node.style.top = ${y - 32}px;
       node.dataset.letter = letter.ch;
@@ -180,21 +180,3 @@
   // ---- START ----
   window.addEventListener("load", init);
 })();
-const tray = document.getElementById("tray");
-const lettersEl = document.getElementById("letters");
-const RADIUS = 110;
-
-function renderLetters(letters) {
-  lettersEl.innerHTML = "";
-  const angleStep = (2 * Math.PI) / letters.length;
-  letters.forEach((letter, i) => {
-    const angle = i * angleStep;
-    const x = RADIUS * Math.cos(angle);
-    const y = RADIUS * Math.sin(angle);
-    const node = document.createElement("div");
-    node.className = letter-node c${i % 4};
-    node.style.transform = translate(${x}px, ${y}px);
-    node.textContent = letter;
-    lettersEl.appendChild(node);
-  });
-}
