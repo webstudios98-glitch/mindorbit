@@ -7,7 +7,8 @@
   const timerEl = document.getElementById("timer");
   const scoreEl = document.getElementById("score");
   const msgEl = document.getElementById("message");
-  const pingSound = document.getElementById("pingSound");
+  const pingSound = document.getElementById('pingSound'); 
+  pingSoundplay();
 
   // ---- CONFIG ----
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
