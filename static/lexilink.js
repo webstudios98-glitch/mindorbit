@@ -182,9 +182,9 @@ const validWords = ["cat", "mat", "man", "hat", "ran", "cry", "many", "sand", "h
 function checkWord(word) {
   word = word.toLowerCase();
   if (validWords.includes(word)) {
-    alert(✅ Great! "${word}" is a valid word!);
+    alert(`✅ Great! "${word}" is a valid word!`);
   } else {
-    alert(❌ "${word}" is not in the word list.);
+    alert(`❌ "${word}" is not in the word list.`);
   }
 }
 
