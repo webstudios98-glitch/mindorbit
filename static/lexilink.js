@@ -180,3 +180,21 @@
   // ---- START ----
   window.addEventListener("load", init);
 })();
+const tray = document.getElementById("tray");
+const lettersEl = document.getElementById("letters");
+const RADIUS = 110;
+
+function renderLetters(letters) {
+  lettersEl.innerHTML = "";
+  const angleStep = (2 * Math.PI) / letters.length;
+  letters.forEach((letter, i) => {
+    const angle = i * angleStep;
+    const x = RADIUS * Math.cos(angle);
+    const y = RADIUS * Math.sin(angle);
+    const node = document.createElement("div");
+    node.className = letter-node c${i % 4};
+    node.style.transform = translate(${x}px, ${y}px);
+    node.textContent = letter;
+    lettersEl.appendChild(node);
+  });
+}
