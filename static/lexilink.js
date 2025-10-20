@@ -150,11 +150,11 @@
   // ---- TIMER ----
   function startTimer() {
     timer = GAME_TIME;
-    timerEl.textContent = ⏳ ${timer}s;
+    timerEl.textContent = `⏳ ${timer}s`;
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
       timer--;
-      timerEl.textContent = ⏳ ${timer}s;
+      timerEl.textContent = `⏳ ${timer}s`;
       if (timer <= 0) {
         clearInterval(timerInterval);
         showMsg("⏰ Time up!");
