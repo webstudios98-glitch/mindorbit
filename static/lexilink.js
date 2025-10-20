@@ -48,6 +48,10 @@ function generatePlayableLetters() {
   // ---- INIT ----
 function init() {
   currentLetters = generatePlayableLetters();
+  currentLetters = letters.map((ch, i) => ({
+    ch,
+    colour:NODE_COLORS[i % NODE_COLORS.length]
+  }));
   renderLetters();
   startTimer();
 
