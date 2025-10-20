@@ -177,3 +177,18 @@
   // ---- START ----
   window.addEventListener("load", init);
 })();
+const validWords = ["cat", "mat", "man", "hat", "ran", "cry", "many", "sand", "hand", "stand", "say", "any", "can", "way"];
+
+function checkWord(word) {
+  word = word.toLowerCase();
+  if (validWords.includes(word)) {
+    alert(✅ Great! "${word}" is a valid word!);
+  } else {
+    alert(❌ "${word}" is not in the word list.);
+  }
+}
+
+document.querySelector("#submitBtn").addEventListener("click", () => {
+  const input = document.querySelector("#wordInput").value.trim();
+  if (input) checkWord(input);
+});
