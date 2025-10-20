@@ -136,7 +136,7 @@
 
     if (WORDS.includes(currentWord)) {
       score += currentWord.length * 10;
-      scoreEl.textContent = Score: ${score};
+      scoreEl.textContent = `Score: ${score}`;
       showMsg("✅ Great!");
     } else {
       showMsg("😅 Not a valid word");
