@@ -1,65 +1,155 @@
-/* LexiLink — MindOrbit Word Builder */
-.game-container {
-  text-align: center;
+/* lexilink.css - neon circular layout */
+.lexi-shell {
+  max-width: 980px;
   margin: 40px auto;
-  padding: 30px;
-  max-width: 500px;
-  background: rgba(10, 10, 25, 0.75);
-  border-radius: 18px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-  color: #eafaff;
-  font-family: "Poppins", sans-serif;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  border-radius: 14px;
+  border: 1px solid rgba(0,255,255,0.06);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  position: relative;
 }
 
-h2 {
-  font-size: 1.8em;
-  color: #00e5ff;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
+.lexi-header h1 {
+  margin: 6px 0;
+  font-size: 1.6rem;
+  background: linear-gradient(90deg,#00ffe0,#ff00ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  display: inline-block;
+}
+.sub { color: #bfeff6; opacity: 0.9; font-size: .95rem; margin-bottom: 14px; }
+
+.lexi-board {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  align-items: center;
+  justify-items: center;
+  padding: 12px;
 }
 
-#letters {
-  font-size: 2em;
-  letter-spacing: 8px;
-  margin: 20px 0;
-  color: #7cfff2;
-  text-shadow: 0 0 10px rgba(0, 229, 255, 0.8);
+/* neon circle plate behind letters */
+.circle-plate{
+  width: min(480px, 86vw);
+  height: min(480px, 86vw);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, rgba(0,255,255,0.06), transparent 20%),
+              radial-gradient(circle at 70% 75%, rgba(255,0,255,0.04), transparent 18%),
+              rgba(0,0,0,0.25);
+  border: 2px solid rgba(0,255,255,0.06);
+  box-shadow: 0 0 40px rgba(0,255,255,0.06), inset 0 0 28px rgba(255,0,255,0.02);
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
 }
 
-input[type="text"] {
-  padding: 10px 15px;
-  width: 70%;
-  border: none;
-  border-radius: 10px;
-  outline: none;
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  font-size: 1em;
+/* letter nodes container positioned above circle*/
+.letters {
+  width: min(480px, 86vw);
+  height: min(480px, 86vw);
+  position: relative;
+  z-index: 10;
+  display: block;
+  touch-action: none; /* allow touch dragging */
 }
 
-button {
-  margin-left: 10px;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 10px;
-  background: #00e5ff;
-  color: #000;
-  font-weight: 600;
+/* each letter cell */
+.letter-node {
+  position: absolute;
+  width: calc(var(--node-size, 64px));
+  height: calc(var(--node-size, 64px));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #060606;
+  font-weight: 800;
+  font-size: 1.4rem;
   cursor: pointer;
-  transition: 0.2s;
+  user-select: none;
+  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 0 18px rgba(0,255,255,0.04);
+  z-index: 12;
 }
 
-button:hover {
-  background: #02ffff;
-  box-shadow: 0 0 10px #02ffff;
+/* neon glass look */
+.letter-node .inner {
+  width: 88%;
+  height: 88%;
+  border-radius: 50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+  box-shadow: 0 0 18px rgba(0,255,255,0.09), inset 0 2px 8px rgba(255,255,255,0.6);
 }
 
-#timer, #score, #message {
-  margin-top: 15px;
-  font-size: 1.1em;
+/* colors for nodes */
+.letter-node.c0 { background: linear-gradient(180deg,#00F6FF,#00B5FF); }
+.letter-node.c1 { background: linear-gradient(180deg,#FF5AF2,#FF2D89); }
+.letter-node.c2 { background: linear-gradient(180deg,#FFCD4B,#FF9C00); }
+.letter-node.c3 { background: linear-gradient(180deg,#7CFF9C,#2DD37A); }
+.letter-node.c4 { background: linear-gradient(180deg,#B8A7FF,#6F4DFF); }
+
+.letter-node .inner { background: rgba(255,255,255,0.95); }
+
+/* selected / dragging style */
+.letter-node.selected { transform: scale(0.86); box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+.letter-node.clearing { opacity: 0.05; transform: scale(.2); transition: transform .16s, opacity .25s; }
+
+/* controls */
+.controls {
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:center;
+  margin-top: 8px;
+  z-index: 20;
+}
+.controls input[type="text"]{
+  min-width: 180px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  font-weight:700;
+}
+.controls button {
+  padding: 10px 14px;
+  border-radius:10px;
+  background: linear-gradient(90deg,#00e0ff,#ff00ff);
+  color: #04131b;
+  font-weight:800;
+  border:none;
+  cursor:pointer;
 }
 
-#message {
-  color: #ffd700;
-  font-weight: 500;
+/* message & info */
+.game-info {
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  align-items:center;
+  margin-top:8px;
+  z-index:20;
+}
+.msg {
+  min-width: 200px;
+  color:#bfeff6;
+  text-align:center;
+}
+
+/* responsive tweaks */
+@media (max-width:640px){
+  .letter-node { --node-size: 62px; font-size:1.05rem; }
+  .circle-plate { top: 120px; }
+}
+@media (max-width:420px){
+  .letter-node { --node-size: 54px; }
+  .controls input { min-width: 130px; }
 }
