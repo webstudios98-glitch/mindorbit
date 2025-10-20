@@ -195,3 +195,11 @@
   color: #000;
   box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
 }
+.lexilink-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* makes it center vertically */
+  margin-top: 0; /* ensure no offset */
+}
