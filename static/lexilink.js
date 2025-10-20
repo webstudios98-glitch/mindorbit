@@ -14,14 +14,13 @@
   const GAME_TIME = 60;
   const NODE_COLORS = ["c0", "c1", "c2", "c3", "c4"];
   const WORDS = ["CODE", "AI", "BRAIN", "LOGIC", "NEON", "MIND", "WORD", "LIGHT", "DATA", "TECH"];
-  const NODE_COUNT = 8;
+  const NODE_COUNT = 8; // number of letters around the circle
 
   let currentLetters = [];
   let currentWord = "";
   let score = 0;
   let timer = GAME_TIME;
   let dragging = false;
-  let path = [];
   let timerInterval = null;
 
   // ---- INIT ----
@@ -57,7 +56,7 @@
 
   function renderLetters() {
     lettersEl.innerHTML = "";
-    const radius = lettersEl.offsetWidth / 2 - 50;
+    const radius = lettersEl.offsetWidth / 2 - 40;
     const center = lettersEl.offsetWidth / 2;
 
     currentLetters.forEach((letter, i) => {
@@ -77,7 +76,6 @@
       node.appendChild(inner);
 
       node.addEventListener("click", () => addLetter(letter.ch, node));
-
       lettersEl.appendChild(node);
     });
   }
@@ -86,7 +84,6 @@
   function startDrag(e) {
     e.preventDefault();
     dragging = true;
-    path = [];
     selectNode(e);
   }
 
@@ -167,7 +164,7 @@
   }
 
   function disableGame() {
-    document.querySelectorAll(".letter-node").forEach(n => n.style.pointerEvents = "none");
+    document.querySelectorAll(".letter-node").forEach(n => (n.style.pointerEvents = "none"));
   }
 
   // ---- MESSAGE ----
