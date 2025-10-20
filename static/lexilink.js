@@ -177,7 +177,7 @@
   // ---- START ----
   window.addEventListener("load", init);
 })();
-const validWords = ["cat", "lid", "gun", "hind", "mat", "man", "hat", "ran", "cry", "many", "sand", "hand", "stand", "say", "any", "can", "way", "her","beer", "veg", "grey","bat", "bot", "one", "on", "hen", "ben", "rage", "lag", "pan", "mart", "tag", "fun", "gun", "gear", "cart", "cold", "king", "bare", "name", "pool", "fare", "dear", "tone", "bone", "stay", "zone", "bin"];
+const validWords = ["cat", "lid", "gun", "hind", "mat", "man", "hat", "ran", "cry", "many", "pip", "sand", "hand", "stand", "say", "any", "can", "way", "her","beer", "veg", "grey","bat", "bot", "one", "on", "hen", "ben", "rage", "lag", "pan", "mart", "tag", "fun", "gun", "gear", "cart", "cold", "king", "bare", "name", "pool", "fare", "dear", "tone", "bone", "stay", "zone", "bin"];
 
 function checkWord(word) {
   word = word.toLowerCase();
