@@ -50,22 +50,21 @@ function init() {
   currentLetters = generatePlayableLetters();
   renderLetters();
   startTimer();
+
+  submitBtn.addEventListener("click", submitWord);
+  clearBtn.addEventListener("click", clearWord);
+  wordInput.addEventListener("input", () => {
+    currentWord = wordInput.value.toUpperCase();
+  });
+
+  lettersEl.addEventListener("mousedown", startDrag);
+  lettersEl.addEventListener("mousemove", moveDrag);
+  window.addEventListener("mouseup", endDrag);
+
+  lettersEl.addEventListener("touchstart", startDrag, { passive: false });
+  lettersEl.addEventListener("touchmove", moveDrag, { passive: false });
+  window.addEventListener("touchend", endDrag);
 }
-
-    submitBtn.addEventListener("click", submitWord);
-    clearBtn.addEventListener("click", clearWord);
-    wordInput.addEventListener("input", () => {
-      currentWord = wordInput.value.toUpperCase();
-    });
-
-    lettersEl.addEventListener("mousedown", startDrag);
-    lettersEl.addEventListener("mousemove", moveDrag);
-    window.addEventListener("mouseup", endDrag);
-
-    lettersEl.addEventListener("touchstart", startDrag, { passive: false });
-    lettersEl.addEventListener("touchmove", moveDrag, { passive: false });
-    window.addEventListener("touchend", endDrag);
-  }
 
   // ---- LETTER GENERATION ----
   function generateLetters() {
