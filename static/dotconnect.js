@@ -275,3 +275,4 @@ gameBoard.addEventListener('touchend', (e) => {
   target?.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
   e.preventDefault();
 });
+document.body.style.overflow = "hidden";
