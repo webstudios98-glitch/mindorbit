@@ -203,3 +203,7 @@
   min-height: 100vh; /* makes it center vertically */
   margin-top: 0; /* ensure no offset */
 }
+.letter-ring {
+  position: relative;
+  top: 40px;  /* moves it slightly down */
+}
