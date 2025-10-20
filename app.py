@@ -15,7 +15,7 @@ from flask import send_from_directory
 
 @app.route('/ping.mp3')
 def ping_sound();
-    return send_from_directory('.', 'ping.mp3')
+    return send_from_directory(".", "ping.mp3")
 # ------------------------------------------------------
 # API Setup — using OpenRouter + DeepSeek
 # ------------------------------------------------------
