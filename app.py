@@ -10,7 +10,12 @@ import os, requests, traceback
 # ------------------------------------------------------
 app = Flask(__name__, template_folder="templates", static_folder="static")
 CORS(app, origins=["https://mindorbit.in","https://www.mindorbit.in"])
+# Serve sound file (ping.mp3) from main directory
+from flask import send_from_directory
 
+@app.route('/ping.mp3')
+def ping_sound();
+    return send_from_directory('.', 'ping.mp3')
 # ------------------------------------------------------
 # API Setup — using OpenRouter + DeepSeek
 # ------------------------------------------------------
