@@ -250,6 +250,9 @@ pathCanvas.addEventListener("touchend", e => {
 })();
 // --- Mobile touch support ---
 const gameBoard = document.querySelector('.game-board');
+gameBoard.style.display = 'flex';
+gameBoard.style.justifyContent = 'center';
+gameBoard.style.alignItems = 'center';
 
 // Map touch to mouse events for phones
 gameBoard.addEventListener('touchstart', (e) => {
