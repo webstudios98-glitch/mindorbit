@@ -248,3 +248,27 @@ pathCanvas.addEventListener("touchend", e => {
   window.addEventListener("resize", () => { sizeBoard(); render(); });
   window.addEventListener("load", newGame);
 })();
+// --- Mobile touch support ---
+const gameBoard = document.querySelector('.game-board');
+
+// Map touch to mouse events for phones
+gameBoard.addEventListener('touchstart', (e) => {
+  const touch = e.touches[0];
+  const target = document.elementFromPoint(touch.clientX, touch.clientY);
+  target?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+  e.preventDefault();
+});
+
+gameBoard.addEventListener('touchmove', (e) => {
+  const touch = e.touches[0];
+  const target = document.elementFromPoint(touch.clientX, touch.clientY);
+  target?.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
+  e.preventDefault();
+});
+
+gameBoard.addEventListener('touchend', (e) => {
+  const touch = e.changedTouches[0];
+  const target = document.elementFromPoint(touch.clientX, touch.clientY);
+  target?.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+  e.preventDefault();
+});
