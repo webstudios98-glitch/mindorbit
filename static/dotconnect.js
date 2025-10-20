@@ -276,3 +276,55 @@ gameBoard.addEventListener('touchend', (e) => {
   e.preventDefault();
 });
 document.body.style.overflow = "hidden";
+// --- ensure board centered and responsive ---
+window.addEventListener("load", () => {
+  const gameBoard = document.querySelector(".gameBoard");
+  if (!gameBoard) return;
+
+  gameBoard.style.display = "flex";
+  gameBoard.style.justifyContent = "center";
+  gameBoard.style.alignItems = "center";
+
+  const canvas = document.getElementById("lineCanvas");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    canvas.width = gameBoard.offsetWidth;
+    canvas.height = gameBoard.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  let isDrawing = false, startX = 0, startY = 0;
+
+  function startDraw(e) {
+    isDrawing = true;
+    const rect = canvas.getBoundingClientRect();
+    startX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    startY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+  }
+  function draw(e) {
+    if (!isDrawing) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = "#00ffff";
+    ctx.lineWidth = 4;
+    ctx.stroke();
+  }
+  function stopDraw() { isDrawing = false; }
+
+  canvas.addEventListener("mousedown", startDraw);
+  canvas.addEventListener("mousemove", draw);
+  canvas.addEventListener("mouseup", stopDraw);
+  canvas.addEventListener("mouseleave", stopDraw);
+
+  canvas.addEventListener("touchstart", startDraw);
+  canvas.addEventListener("touchmove", draw);
+  canvas.addEventListener("touchend", stopDraw);
+});
+})();
