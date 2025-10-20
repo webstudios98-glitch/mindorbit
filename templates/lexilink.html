@@ -1,36 +1,56 @@
 {% include 'navbar.html' %}
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>LexiLink — Word Builder</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='lexilink.css') }}">
+  <!-- global theme first, then game-specific -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  
+  <link rel="stylesheet" href="{{ url_for('static', filename='lexilink.css') }}">
 </head>
 <body>
+  <canvas id="bgCanvas"></canvas>
 
-  <div class="game-container">
-    <h2>🔤 LexiLink — Word Builder</h2>
+  <a class="back-btn" href="/moodgame">⬅ Back</a>
 
-    <div id="letters" class="letters"></div>
+  <main class="futuristic-card lexi-shell">
+    <header class="lexi-header">
+      <h1>🔤 LexiLink</h1>
+      <p class="sub">Drag letters or tap to build real words — focus & relax ✨</p>
+    </header>
 
-    <input id="wordInput" type="text" placeholder="Type a word..." autofocus />
-    <button id="submitBtn">Submit</button>
+    <section class="lexi-board">
+      <!-- central neon plate -->
+      <div id="circlePlate" class="circle-plate" aria-hidden="true"></div>
 
-    <p id="timer">⏳ 60s</p>
-    <p id="score">Score: 0</p>
-    <p id="message"></p>
+      <!-- letter nodes container -->
+      <div id="letters" class="letters" role="list" aria-label="Letters"></div>
 
-    <!-- ✅ Back button -->
-    <button id="backBtn" onclick="window.location.href='/games'">⬅ Back</button>
-  </div>
+      <!-- user controls -->
+      <div class="controls">
+        <input id="wordInput" type="text" placeholder="Type or drag letters here" autocomplete="off" aria-label="Your word">
+        <button id="submitBtn">Submit</button>
+        <button id="clearBtn" class="secondary">Clear</button>
+      </div>
 
-  <!-- JS -->
+      <div class="game-info">
+        <span id="timer">⏳ 60s</span>
+        <span id="score">Score: 0</span>
+        <div id="message" class="msg"></div>
+      </div>
+    </section>
+
+    <footer class="lexi-footer">
+      <small>Single-level endless mode — relax & play ✨</small>
+    </footer>
+  </main>
+
+  <!-- sound file should be /static/sounds/ping.mp3 (or update path in JS) -->
+  <audio id="pingSound" src="{{ url_for('static', filename='sounds/ping.mp3') }}" preload="auto"></audio>
+
   <script src="{{ url_for('static', filename='lexilink.js') }}"></script>
 </body>
 </html>
