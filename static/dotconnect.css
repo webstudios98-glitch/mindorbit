@@ -1,0 +1,130 @@
+/* ===============================
+   DOT CONNECT — MINDORBIT STYLE
+   =============================== */
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at center, #0d0d2b 0%, #000 100%);
+  color: #e7fbff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* ----------- MAIN CONTAINER ----------- */
+.dotconnect-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ----------- TOP BAR ----------- */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin-bottom: 20px;
+}
+
+.grid-select {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.grid-select label {
+  font-size: 1rem;
+  color: #9fdfff;
+  background: rgba(255,255,255,0.05);
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,230,255,0.3);
+}
+
+#gridSize {
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+#newGameBtn {
+  background: linear-gradient(90deg, #00e0ff, #ff00ff);
+  color: #001616;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+  transition: transform 0.2s;
+}
+#newGameBtn:hover {
+  transform: scale(1.05);
+}
+
+/* ----------- INFO PANEL ----------- */
+.info-panel {
+  text-align: left;
+  margin: 10px auto 20px;
+  background: rgba(255,255,255,0.03);
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,230,255,0.08);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  width: 90%;
+}
+
+.info-panel h2 {
+  margin: 0 0 6px;
+  color: #00e0ff;
+}
+
+.info-panel p {
+  margin: 6px 0;
+  font-size: 1rem;
+}
+
+/* ----------- CANVAS ----------- */
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+canvas {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 230, 255, 0.08);
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.6);
+  max-width: 90%;
+  height: auto;
+  cursor: crosshair;
+}
+
+/* ----------- RESPONSIVE ----------- */
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .info-panel {
+    text-align: center;
+  }
+
+  canvas {
+    width: 90vw;
+    height: 90vw;
+  }
+}
