@@ -47,11 +47,13 @@ function generatePlayableLetters() {
 
   // ---- INIT ----
 function init() {
-  currentLetters = generatePlayableLetters();
+  // Generate playable letters
+  const letters = generatePlayableLetters();
   currentLetters = letters.map((ch, i) => ({
     ch,
-    colour:NODE_COLORS[i % NODE_COLORS.length]
+    color: NODE_COLORS[i % NODE_COLORS.length]
   }));
+
   renderLetters();
   startTimer();
 
