@@ -330,4 +330,4 @@ window.addEventListener("load", () => {
   canvas.addEventListener("touchmove", draw);
   canvas.addEventListener("touchend", stopDraw);
 });
-})();
+
