@@ -55,8 +55,8 @@
       color: NODE_COLORS[i % NODE_COLORS.length]
     }));
 
-   function renderLetters();
-    startTimer();
+   function renderLetters() {
+    startTimer() };
 
     submitBtn.addEventListener("click", submitWord);
     clearBtn.addEventListener("click", clearWord);
