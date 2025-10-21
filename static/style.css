@@ -789,3 +789,25 @@ canvas#lineCanvas {
   pointer-events: none;
   z-index: 1;
 }
+/* 🎯 Fix layout ONLY for DotConnect page */
+body.dotconnect-page .game-container {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 90vw;
+  padding-top: 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive grid sizing for DotConnect only */
+body.dotconnect-page #board,
+body.dotconnect-page canvas,
+body.dotconnect-page .game-board {
+  width: 90vw;
+  height: auto;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+}
