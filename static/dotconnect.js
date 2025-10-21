@@ -12,15 +12,14 @@
   let moves = START_MOVES;
   let best = Number(localStorage.getItem("mindorbit_best") || 0);
 
-  const boardEl = 
-  document.getElementById("dotCanvas").parentElement;
+  const boardEl = document.getElementById("dotCanvas").parentElement;
   const scoreEl = document.getElementById("score");
   const movesEl = document.getElementById("moves");
   const bestEl = document.getElementById("best");
   const gridSel = document.getElementById("gridSize");
   const newBtn = document.getElementById("newGame");
 
-  // Setup Canvas
+  // Canvas setup for path line
   const pathCanvas = document.createElement("canvas");
   pathCanvas.id = "pathCanvas";
   pathCanvas.style.position = "absolute";
@@ -33,7 +32,7 @@
   boardEl.appendChild(pathCanvas);
   const pCtx = pathCanvas.getContext("2d");
 
-  // Helper Functions
+  // Helpers
   const inBounds = (r, c) => r >= 0 && c >= 0 && r < rows && c < cols;
   const neighbors = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
 
@@ -82,6 +81,7 @@
         dot.style.backgroundColor = color;
 
         if (path.find(p => p.r === r && p.c === c)) dot.classList.add("selected");
+
         cellEl.appendChild(dot);
         boardEl.appendChild(cellEl);
       }
@@ -124,13 +124,19 @@
     if (color !== allowColor) return;
 
     const last = path[path.length - 1];
+
+    // Undo move
     if (path.length >= 2 && r === path[path.length - 2].r && c === path[path.length - 2].c) {
       path.pop();
       render();
       return;
     }
-    if (path.some(p => p.r === r && p.c === c)) return;
+
+    // Prevent non-neighbor jumps
     if (!neighbors(last, { r, c })) return;
+
+    // Prevent duplicate cell usage
+    if (path.some(p => p.r === r && p.c === c)) return;
 
     path.push({ r, c, color });
     render();
@@ -144,8 +150,11 @@
       const gained = SCORE_RULE(path.length);
       score += gained;
       scoreEl.textContent = score;
+
+      // Clear matched dots
       path.forEach(({ r, c }) => (grid[r][c] = null));
       collapseAndRefill();
+
       moves = Math.max(0, moves - 1);
       movesEl.textContent = moves;
 
@@ -164,10 +173,12 @@
   function collapseAndRefill() {
     for (let c = 0; c < cols; c++) {
       const stack = [];
-      for (let r = rows - 1; r >= 0; r--) if (grid[r][c]) stack.push(grid[r][c]);
-      let r = rows - 1;
-      while (stack.length) grid[r--][c] = stack.shift();
-      while (r >= 0) grid[r--][c] = COLORS[Math.floor(Math.random() * COLORS.length)];
+      for (let r = rows - 1; r >= 0; r--) {
+        if (grid[r][c]) stack.push(grid[r][c]);
+      }
+      for (let r = rows - 1; r >= 0; r--) {
+        grid[r][c] = stack.pop() || COLORS[Math.floor(Math.random() * COLORS.length)];
+      }
     }
   }
 
@@ -181,16 +192,40 @@
     return { r: y, c: x };
   }
 
-  // Events
-  boardEl.addEventListener("mousedown", e => startDrag(...Object.values(eventToCell(e))));
-  boardEl.addEventListener("mousemove", e => dragging && extendPath(...Object.values(eventToCell(e))));
+  // Mouse & Touch Events
+  boardEl.addEventListener("mousedown", e => {
+    const { r, c } = eventToCell(e);
+    startDrag(r, c);
+  });
+  boardEl.addEventListener("mousemove", e => {
+    if (dragging) {
+      const { r, c } = eventToCell(e);
+      extendPath(r, c);
+    }
+  });
   window.addEventListener("mouseup", endDrag);
 
-  boardEl.addEventListener("touchstart", e => { e.preventDefault(); startDrag(...Object.values(eventToCell(e))); }, { passive: false });
-  boardEl.addEventListener("touchmove", e => { e.preventDefault(); dragging && extendPath(...Object.values(eventToCell(e))); }, { passive: false });
-  window.addEventListener("touchend", e => { e.preventDefault(); endDrag(); }, { passive: false });
+  boardEl.addEventListener("touchstart", e => {
+    e.preventDefault();
+    const { r, c } = eventToCell(e);
+    startDrag(r, c);
+  }, { passive: false });
+  boardEl.addEventListener("touchmove", e => {
+    e.preventDefault();
+    if (dragging) {
+      const { r, c } = eventToCell(e);
+      extendPath(r, c);
+    }
+  }, { passive: false });
+  window.addEventListener("touchend", e => {
+    e.preventDefault();
+    endDrag();
+  }, { passive: false });
 
-  gridSel.addEventListener("change", () => { rows = cols = parseInt(gridSel.value, 10); newGame(); });
+  gridSel.addEventListener("change", () => {
+    rows = cols = parseInt(gridSel.value, 10);
+    newGame();
+  });
   newBtn.addEventListener("click", newGame);
 
   function newGame() {
@@ -204,7 +239,10 @@
     render();
   }
 
-  window.addEventListener("resize", () => { sizeBoard(); render(); });
+  window.addEventListener("resize", () => {
+    sizeBoard();
+    render();
+  });
   window.addEventListener("load", newGame);
 })();
 
