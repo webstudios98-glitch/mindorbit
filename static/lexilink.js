@@ -55,7 +55,7 @@
       color: NODE_COLORS[i % NODE_COLORS.length]
     }));
 
-    renderLetters();
+   function renderLetters();
     startTimer();
 
     submitBtn.addEventListener("click", submitWord);
@@ -79,13 +79,13 @@
     const radius = lettersEl.offsetWidth / 2 - 40;
     const center = lettersEl.offsetWidth / 2;
 
-    currentLetters.forEach((letter, i) => {
+    let currentLetters.forEach((letter, i) => {
       const angle = (i / currentLetters.length) * 2 * Math.PI - Math.PI / 2;
       const x = center + radius * Math.cos(angle);
       const y = center + radius * Math.sin(angle);
 
       const node = document.createElement("div");
-      node.className = letter-node `${letter.color}`;
+      node.className = `letter-node ${letter.color}`;
       node.style.left = `${x - 32}px`;
       node.style.top = `${y - 32}px`;
       node.dataset.letter = letter.ch;
