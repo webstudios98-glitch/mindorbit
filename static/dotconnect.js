@@ -80,7 +80,7 @@
         dot.style.width = dot.style.height = cell * 0.8 + "px";
         dot.style.borderRadius = "50%";
         dot.style.backgroundColor = color;
-        dot.style.boxShadow = 0 0 10px ${color};
+        dot.style.boxShadow = `0 0 10px ${color}`;
 
         cellEl.appendChild(dot);
         boardEl.appendChild(cellEl);
