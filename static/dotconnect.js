@@ -12,22 +12,20 @@
   let moves = START_MOVES;
   let best = Number(localStorage.getItem("mindorbit_best") || 0);
 
-  const boardEl = document.getElementById("dotCanvas").parentElement;
+  const boardEl = document.getElementById("board");
   const scoreEl = document.getElementById("score");
   const movesEl = document.getElementById("moves");
   const bestEl = document.getElementById("best");
   const gridSel = document.getElementById("gridSize");
-  const newBtn = document.getElementById("newGame");
+  const newBtn = document.getElementById("newGameBtn");
 
-  // Canvas setup for path line
+  // Add path canvas overlay
   const pathCanvas = document.createElement("canvas");
   pathCanvas.id = "pathCanvas";
   pathCanvas.style.position = "absolute";
   pathCanvas.style.top = 0;
   pathCanvas.style.left = 0;
-  pathCanvas.style.zIndex = 1;
-  pathCanvas.style.width = "100%";
-  pathCanvas.style.height = "100%";
+  pathCanvas.style.zIndex = 2;
   pathCanvas.style.pointerEvents = "none";
   boardEl.appendChild(pathCanvas);
   const pCtx = pathCanvas.getContext("2d");
@@ -71,6 +69,7 @@
 
         const cellEl = document.createElement("div");
         cellEl.className = "cell";
+        cellEl.style.position = "absolute";
         cellEl.style.left = c * cell + "px";
         cellEl.style.top = r * cell + "px";
         cellEl.dataset.r = r;
@@ -78,9 +77,10 @@
 
         const dot = document.createElement("div");
         dot.className = "dot";
+        dot.style.width = dot.style.height = cell * 0.8 + "px";
+        dot.style.borderRadius = "50%";
         dot.style.backgroundColor = color;
-
-        if (path.find(p => p.r === r && p.c === c)) dot.classList.add("selected");
+        dot.style.boxShadow = 0 0 10px ${color};
 
         cellEl.appendChild(dot);
         boardEl.appendChild(cellEl);
@@ -115,7 +115,7 @@
     dragging = true;
     allowColor = grid[r][c];
     path = [{ r, c, color: allowColor }];
-    render();
+    redrawPath();
   }
 
   function extendPath(r, c) {
@@ -124,22 +124,13 @@
     if (color !== allowColor) return;
 
     const last = path[path.length - 1];
-
-    // Undo move
-    if (path.length >= 2 && r === path[path.length - 2].r && c === path[path.length - 2].c) {
-      path.pop();
-      render();
-      return;
-    }
-
-    // Prevent non-neighbor jumps
     if (!neighbors(last, { r, c })) return;
 
-    // Prevent duplicate cell usage
+    // Prevent looping
     if (path.some(p => p.r === r && p.c === c)) return;
 
     path.push({ r, c, color });
-    render();
+    redrawPath();
   }
 
   function endDrag() {
@@ -151,7 +142,6 @@
       score += gained;
       scoreEl.textContent = score;
 
-      // Clear matched dots
       path.forEach(({ r, c }) => (grid[r][c] = null));
       collapseAndRefill();
 
@@ -192,40 +182,30 @@
     return { r: y, c: x };
   }
 
-  // Mouse & Touch Events
-  boardEl.addEventListener("mousedown", e => {
-    const { r, c } = eventToCell(e);
-    startDrag(r, c);
-  });
+  // Events
+  boardEl.addEventListener("mousedown", e => startDrag(...Object.values(eventToCell(e))));
   boardEl.addEventListener("mousemove", e => {
-    if (dragging) {
-      const { r, c } = eventToCell(e);
-      extendPath(r, c);
-    }
+    if (dragging) extendPath(...Object.values(eventToCell(e)));
   });
   window.addEventListener("mouseup", endDrag);
 
   boardEl.addEventListener("touchstart", e => {
     e.preventDefault();
-    const { r, c } = eventToCell(e);
-    startDrag(r, c);
+    startDrag(...Object.values(eventToCell(e)));
   }, { passive: false });
+
   boardEl.addEventListener("touchmove", e => {
     e.preventDefault();
-    if (dragging) {
-      const { r, c } = eventToCell(e);
-      extendPath(r, c);
-    }
+    if (dragging) extendPath(...Object.values(eventToCell(e)));
   }, { passive: false });
-  window.addEventListener("touchend", e => {
-    e.preventDefault();
-    endDrag();
-  }, { passive: false });
+
+  window.addEventListener("touchend", endDrag, { passive: false });
 
   gridSel.addEventListener("change", () => {
     rows = cols = parseInt(gridSel.value, 10);
     newGame();
   });
+
   newBtn.addEventListener("click", newGame);
 
   function newGame() {
@@ -243,6 +223,6 @@
     sizeBoard();
     render();
   });
+
   window.addEventListener("load", newGame);
 })();
-
