@@ -125,7 +125,7 @@
 
     if (validWords.includes(currentWord)) {
       score += currentWord.length * 10;
-      scoreEl.textContent = Score: ${score};
+      scoreEl.textContent = `Score: ${score}`;
       showMsg("✅ Great!");
       pingSound.currentTime = 0;
       pingSound.play();
