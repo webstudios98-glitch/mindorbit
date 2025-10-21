@@ -155,3 +155,7 @@ footer {
   mix-blend-mode: screen; /* or try lighten */
   filter: brightness(1.1) contrast(1.05);
 }
+#pathCanvas {
+  image-rendering: optimizeSpeed;
+  transform: translateZ(0); /* forces proper GPU isolation */
+}
