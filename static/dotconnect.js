@@ -248,11 +248,13 @@ window.addEventListener("touchend", () => {
     render();
   }
 
-  window.addEventListener("resize", () => { sizeBoard(); render(); });
+  window.addEventListener("resize", () =>
+    { sizeBoard(); render(); });
   window.addEventListener("load", newGame);
 })();
 // --- Mobile touch support ---
-const gameBoard = document.querySelector("#dot-board");
+const gameBoard =
+document.querySelector("#dot-board");
 gameBoard.style.display = 'flex';
 gameBoard.style.justifyContent = 'center';
 gameBoard.style.alignItems = 'center';
