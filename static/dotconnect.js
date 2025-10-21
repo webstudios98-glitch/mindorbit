@@ -132,10 +132,35 @@
     path.push({ r, c, color });
     redrawPath();
   }
+function removeMatchedDots() {
+  if (path.length >= 3) {
+    const gained = SCORE_RULE(path.length);
+    score += gained;
+    scoreEl.textContent = score;
 
+    // Remove matched dots
+    path.forEach(({ r, c }) => (grid[r][c] = null));
+    collapseAndRefill();
+
+    moves = Math.max(0, moves - 1);
+    movesEl.textContent = moves;
+
+    if (score > best) {
+      best = score;
+      localStorage.setItem("mindorbit_best", best);
+      bestEl.textContent = best;
+    }
+  }
+
+  path = [];
+  allowColor = null;
+  render();
+}
   function endDrag() {
-    if (!dragging) return;
-    dragging = false;
+  if (!dragging) return;
+  dragging = false;
+  removeMatchedDots();  // ✅ call our new function
+
 
     if (path.length >= 3) {
       const gained = SCORE_RULE(path.length);
