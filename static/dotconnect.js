@@ -1,28 +1,25 @@
-let grid = [];
 (() => {
-  // ===== Config =====
   const COLORS = ["#00E5FF", "#FF3CF3", "#FFB300", "#7CFF8A", "#A98BFF"];
-  const START_GRID = 8;
   const START_MOVES = 30;
   const SCORE_RULE = n => (n >= 3 ? (n - 2) * (n - 2) * 10 : 0);
 
-  // ===== State =====
-  let rows = START_GRID, cols = START_GRID;
-  score = 0;
-  moves = START_MOVES;
+  let rows = 8, cols = 8;
+  let grid = [];
+  let path = [];
+  let dragging = false;
+  let allowColor = null;
+  let score = 0;
+  let moves = START_MOVES;
   let best = Number(localStorage.getItem("mindorbit_best") || 0);
-  let path = [], dragging = false, allowColor = null;
 
-  // ===== DOM =====
   const boardEl = document.getElementById("board");
-  boardEl.style.touchAction = "none";
   const scoreEl = document.getElementById("score");
   const movesEl = document.getElementById("moves");
-  const bestEl  = document.getElementById("best");
+  const bestEl = document.getElementById("best");
   const gridSel = document.getElementById("gridSize");
-  const newBtn  = document.getElementById("newGame");
+  const newBtn = document.getElementById("newGame");
 
-  // Canvas for connection lines
+  // Setup Canvas
   const pathCanvas = document.createElement("canvas");
   pathCanvas.id = "pathCanvas";
   pathCanvas.style.position = "absolute";
@@ -31,38 +28,31 @@ let grid = [];
   pathCanvas.style.zIndex = 1;
   pathCanvas.style.width = "100%";
   pathCanvas.style.height = "100%";
-  boardEl.appendChild(pathCanvas);
-
-  pathCanvas.width = boardEl.clientWidth;
-  pathCanvas.height = boardEl.clientHeight;
   pathCanvas.style.pointerEvents = "none";
-
+  boardEl.appendChild(pathCanvas);
   const pCtx = pathCanvas.getContext("2d");
 
-  // ===== Helpers =====
+  // Helper Functions
   const inBounds = (r, c) => r >= 0 && c >= 0 && r < rows && c < cols;
   const neighbors = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
 
   function seedGrid() {
     grid = Array.from({ length: rows }, () =>
-      Array.from({ length: cols }, () => COLORS[(Math.random() * COLORS.length) | 0])
+      Array.from({ length: cols }, () => COLORS[Math.floor(Math.random() * COLORS.length)])
     );
   }
 
   function sizeBoard() {
-    const size = Math.min(560, Math.max(340, Math.floor(window.innerWidth * 0.6)));
+    const size = Math.min(560, Math.max(340, Math.floor(window.innerWidth * 0.8)));
     boardEl.style.width = size + "px";
     boardEl.style.height = size + "px";
     const cell = size / cols;
     boardEl.style.setProperty("--cell", cell + "px");
 
     const dpr = window.devicePixelRatio || 1;
-    pathCanvas.style.width = size + "px";
-    pathCanvas.style.height = size + "px";
     pathCanvas.width = Math.round(size * dpr);
     pathCanvas.height = Math.round(size * dpr);
     pCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    pCtx.clearRect(0, 0, size, size);
   }
 
   function cellToPixels(r, c) {
@@ -72,16 +62,17 @@ let grid = [];
 
   function render() {
     boardEl.querySelectorAll(".cell").forEach(n => n.remove());
-
     const cell = parseFloat(getComputedStyle(boardEl).getPropertyValue("--cell"));
+
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const color = grid[r][c];
         if (!color) continue;
+
         const cellEl = document.createElement("div");
         cellEl.className = "cell";
         cellEl.style.left = c * cell + "px";
-        cellEl.style.top  = r * cell + "px";
+        cellEl.style.top = r * cell + "px";
         cellEl.dataset.r = r;
         cellEl.dataset.c = c;
 
@@ -90,7 +81,6 @@ let grid = [];
         dot.style.backgroundColor = color;
 
         if (path.find(p => p.r === r && p.c === c)) dot.classList.add("selected");
-
         cellEl.appendChild(dot);
         boardEl.appendChild(cellEl);
       }
@@ -150,39 +140,24 @@ let grid = [];
     dragging = false;
 
     if (path.length >= 3) {
-      const cells = new Set(path.map(p => `${p.r},${p.c}`));
-      boardEl.querySelectorAll(".cell").forEach(cellEl => {
-        const r = +cellEl.dataset.r, c = +cellEl.dataset.c;
-        if (cells.has(`${r},${c}`)) {
-          const dot = cellEl.firstChild;
-          if (dot) dot.classList.add("clearing");
-        }
-      });
-
       const gained = SCORE_RULE(path.length);
       score += gained;
       scoreEl.textContent = score;
+      path.forEach(({ r, c }) => (grid[r][c] = null));
+      collapseAndRefill();
+      moves = Math.max(0, moves - 1);
+      movesEl.textContent = moves;
 
-      setTimeout(() => {
-        path.forEach(({ r, c }) => (grid[r][c] = null));
-        collapseAndRefill();
-        moves = Math.max(0, moves - 1);
-        movesEl.textContent = moves;
-
-        if (score > best) {
-          best = score;
-          localStorage.setItem("mindorbit_best", best);
-          bestEl.textContent = best;
-        }
-        path = [];
-        allowColor = null;
-        render();
-      }, 120);
-    } else {
-      path = [];
-      allowColor = null;
-      render();
+      if (score > best) {
+        best = score;
+        localStorage.setItem("mindorbit_best", best);
+        bestEl.textContent = best;
+      }
     }
+
+    path = [];
+    allowColor = null;
+    render();
   }
 
   function collapseAndRefill() {
@@ -191,21 +166,15 @@ let grid = [];
       for (let r = rows - 1; r >= 0; r--) if (grid[r][c]) stack.push(grid[r][c]);
       let r = rows - 1;
       while (stack.length) grid[r--][c] = stack.shift();
-      while (r >= 0) grid[r--][c] = COLORS[(Math.random() * COLORS.length) | 0];
+      while (r >= 0) grid[r--][c] = COLORS[Math.floor(Math.random() * COLORS.length)];
     }
   }
 
   function eventToCell(e) {
     const rect = boardEl.getBoundingClientRect();
     const cellSize = rect.width / cols;
-    let clientX, clientY;
-    if (e.touches && e.touches.length) {
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else {
-      clientX = e.clientX;
-      clientY = e.clientY;
-    }
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
     const x = Math.floor((clientX - rect.left) / cellSize);
     const y = Math.floor((clientY - rect.top) / cellSize);
     return { r: y, c: x };
@@ -213,27 +182,13 @@ let grid = [];
 
   // Events
   boardEl.addEventListener("mousedown", e => startDrag(...Object.values(eventToCell(e))));
-  boardEl.addEventListener("mousemove", e => { if (dragging) extendPath(...Object.values(eventToCell(e))); });
+  boardEl.addEventListener("mousemove", e => dragging && extendPath(...Object.values(eventToCell(e))));
   window.addEventListener("mouseup", endDrag);
 
- // --- Touch Support (Mobile) ---
-pathCanvas.addEventListener("touchstart", (e) => {
-  e.preventDefault();
-  const touch = e.touches[0];
-  startDrag(...Object.values(eventToCell(touch)));
-}, { passive: false });
+  boardEl.addEventListener("touchstart", e => { e.preventDefault(); startDrag(...Object.values(eventToCell(e))); }, { passive: false });
+  boardEl.addEventListener("touchmove", e => { e.preventDefault(); dragging && extendPath(...Object.values(eventToCell(e))); }, { passive: false });
+  window.addEventListener("touchend", e => { e.preventDefault(); endDrag(); }, { passive: false });
 
-pathCanvas.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-  if (isDragging) {
-    const touch = e.touches[0];
-    extendPath(...Object.values(eventToCell(touch)));
-  }
-}, { passive: false });
-
-window.addEventListener("touchend", () => {
-  if (isDragging) endDrag();
-}, { passive: false });
   gridSel.addEventListener("change", () => { rows = cols = parseInt(gridSel.value, 10); newGame(); });
   newBtn.addEventListener("click", newGame);
 
@@ -243,93 +198,12 @@ window.addEventListener("touchend", () => {
     scoreEl.textContent = score;
     movesEl.textContent = moves;
     bestEl.textContent = best;
-    sizeBoard();
     seedGrid();
+    sizeBoard();
     render();
   }
 
-  window.addEventListener("resize", () =>
-    { sizeBoard(); render(); });
+  window.addEventListener("resize", () => { sizeBoard(); render(); });
   window.addEventListener("load", newGame);
 })();
-// --- Mobile touch support ---
-const gameBoard =
-document.querySelector("#dot-board");
-gameBoard.style.display = 'flex';
-gameBoard.style.justifyContent = 'center';
-gameBoard.style.alignItems = 'center';
-
-// Map touch to mouse events for phones
-gameBoard.addEventListener('touchstart', (e) => {
-  const touch = e.touches[0];
-  const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  target?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
-  e.preventDefault();
-});
-
-gameBoard.addEventListener('touchmove', (e) => {
-  const touch = e.touches[0];
-  const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  target?.dispatchEvent(new MouseEvent('mousemove', { bubbles: true }));
-  e.preventDefault();
-});
-
-gameBoard.addEventListener('touchend', (e) => {
-  const touch = e.changedTouches[0];
-  const target = document.elementFromPoint(touch.clientX, touch.clientY);
-  target?.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
-  e.preventDefault();
-});
-document.body.style.overflow = "hidden";
-// --- ensure board centered and responsive ---
-window.addEventListener("load", () => {
-  const gameBoard = document.querySelector(".gameBoard");
-  if (!gameBoard) return;
-
-  gameBoard.style.display = "flex";
-  gameBoard.style.justifyContent = "center";
-  gameBoard.style.alignItems = "center";
-
-  const canvas = document.getElementById("lineCanvas");
-  const ctx = canvas.getContext("2d");
-
-  function resizeCanvas() {
-    canvas.width = gameBoard.offsetWidth;
-    canvas.height = gameBoard.offsetHeight;
-  }
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
-
-  let isDrawing = false, startX = 0, startY = 0;
-
-  function startDraw(e) {
-    isDrawing = true;
-    const rect = canvas.getBoundingClientRect();
-    startX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    startY = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-  }
-  function draw(e) {
-    if (!isDrawing) return;
-    const rect = canvas.getBoundingClientRect();
-    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.moveTo(startX, startY);
-    ctx.lineTo(x, y);
-    ctx.strokeStyle = "#00ffff";
-    ctx.lineWidth = 4;
-    ctx.stroke();
-  }
-  function stopDraw() { isDrawing = false; }
-
-  canvas.addEventListener("mousedown", startDraw);
-  canvas.addEventListener("mousemove", draw);
-  canvas.addEventListener("mouseup", stopDraw);
-  canvas.addEventListener("mouseleave", stopDraw);
-
-  canvas.addEventListener("touchstart", startDraw);
-  canvas.addEventListener("touchmove", draw);
-  canvas.addEventListener("touchend", stopDraw);
-});
 
