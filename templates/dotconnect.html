@@ -1,73 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MindOrbit - Connect the Dots</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
-
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dot Connect — MindOrbit</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dotconnect.css') }}">
 </head>
-<body class="dotconnect-page">
- <div class="board-wrapper">
-   <canvas id="lineCanvass"></canvas>
-   <div class="gameBoard" id="board"></div>
-  <a href="/moodgame" class="back-btn">⬅ Back</a>
+<body>
+  {% include 'navbar.html' %}
 
-
-  <header>
-    <h1>🌌 MindOrbit</h1>
-    <nav>
- <a href="/home">Home</a>
-      <a href="/chat">Chat</a>
-      <a href="/moodgame">Moodgames</a>
-      <a href="/noteheart">NoteHeart</a>
-      <a href="/calmspace">CalmSpace</a>
-      <a href="/badges">Badges</a>
-      <a href="/feedback">Feedback</a>
-      <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-
-      <a href="/">Sign Up</a>
-
-
-    </nav>
-  </header>
-
-  <main>
-    <section class="futuristic-card game-shell">
-      <h2>🎇 Connect the Dots</h2>
-      <p>Drag to connect adjacent dots of the same color. Release to clear them. Bigger chains = bigger scores!</p>
-
-      <div class="hud">
-        <div class="pill">Score: <span id="score">0</span></div>
-        <div class="pill">Moves: <span id="moves">30</span></div>
-        <div class="pill">Best: <span id="best">0</span></div>
-      </div>
-
-      <div class="board-wrap">
-        <div id="board" class="board" aria-label="Dots board"></div>
-      </div>
-
-      <div class="controls">
+  <div class="dotconnect-container">
+    <div class="top-bar">
+      <div class="grid-select">
         <label for="gridSize">Grid</label>
         <select id="gridSize">
-          <option value="6">6 × 6</option>
-          <option value="8" selected>8 × 8</option>
-          <option value="10">10 × 10</option>
+          <option value="6">6×6</option>
+          <option value="8" selected>8×8</option>
+          <option value="16">16×16</option>
         </select>
-        <button id="newGame">🔄 New Game</button>
       </div>
-    </section>
-  </main>
+      <button id="newGameBtn">🔄 New Game</button>
+    </div>
 
- <footer>
-  <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
-</footer>
+    <div class="info-panel">
+      <h2>✨ Connect the Dots</h2>
+      <p>Drag to connect adjacent dots of the same color.<br>
+      Release to clear them. Bigger chains = bigger scores!</p>
+      <p>Score: <span id="score">0</span></p>
+      <p>Moves: <span id="moves">30</span></p>
+      <p>Best: <span id="best">0</span></p>
+    </div>
 
-  
-  <script src="{{ url_for('static',filename='dotconnect.js') }}" defer></script>
-   
+    <div class="canvas-container">
+      <canvas id="dotCanvas" width="500" height="500"></canvas>
+    </div>
+  </div>
+ 
+
+  <script src="{{ url_for('static', filename='dotconnect.js') }}"></script>
 </body>
 </html>
+
