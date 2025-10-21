@@ -142,3 +142,16 @@ footer {
   letter-spacing: 0.4px;
   box-shadow: 0 -2px 10px rgba(0, 255, 255, 0.08);
 }
+/* fixes weird grid-line texture on circles */
+.dot {
+  isolation: isolate; /* keeps each dot separate from canvas blending */
+  background-blend-mode: normal;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* optional: soften the glow from the path line */
+#pathCanvas {
+  mix-blend-mode: screen; /* or try lighten */
+  filter: brightness(1.1) contrast(1.05);
+}
