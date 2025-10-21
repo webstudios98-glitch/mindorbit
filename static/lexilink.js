@@ -140,7 +140,7 @@
   // ---- Timer ----
   function startTimer() {
     timer = GAME_TIME;
-    timerEl.textContent = `⏳ ${timer}s`;
+  timerEl.textContent = `⏳ ${timer}s`;   // ✅ works
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
       timer--;
