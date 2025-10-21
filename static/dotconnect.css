@@ -159,3 +159,21 @@ footer {
   image-rendering: optimizeSpeed;
   transform: translateZ(0); /* forces proper GPU isolation */
 }
+.canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;              /* prevent any overflow */
+  box-sizing: border-box;
+}
+
+canvas {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 230, 255, 0.08);
+  box-shadow: 0 12px 50px rgba(0, 0, 0, 0.6);
+  max-width: 88vw;               /* slightly less to ensure no clipping */
+  height: auto;
+  cursor: crosshair;
+}
