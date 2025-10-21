@@ -12,7 +12,8 @@
   let moves = START_MOVES;
   let best = Number(localStorage.getItem("mindorbit_best") || 0);
 
-  const boardEl = document.getElementById("board");
+  const boardEl = 
+  document.getElementById("dotCanvas").parentElement;
   const scoreEl = document.getElementById("score");
   const movesEl = document.getElementById("moves");
   const bestEl = document.getElementById("best");
