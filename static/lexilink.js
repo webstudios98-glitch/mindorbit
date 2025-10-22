@@ -122,7 +122,7 @@ window.addEventListener('load', () => {
   function checkWord(word) {
     const upper = word.toUpperCase();
     if (randomWordSet.includes(upper)) {
-      wordDisplay.textContent = ✅ `${upper}` found!;
+      wordDisplay.textContent = `✅ ${upper} found!`;
       wordDisplay.style.color = "#00ff9f";
 
       // animate out current letters, then generate new ones
