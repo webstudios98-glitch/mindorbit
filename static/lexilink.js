@@ -75,7 +75,8 @@ function init() {
 }
 
   // ---- Render letters around the circle ----
-function renderLetters() {
+  function renderLetters() {
+  console.log("Rendering letters:", currentLetters);
   const plate = document.querySelector(".circle-plate"); // your glowing plate div
   const letterContainer = document.getElementById("letters");
   letterContainer.innerHTML = ""; // clear old letters
