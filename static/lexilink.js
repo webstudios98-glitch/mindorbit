@@ -155,4 +155,11 @@ window.addEventListener('load', () => {
   // initial
   createLetters();
 });
-document.getElementById('pingSound').play();
+function pingSound() {
+  const ping = document.getElementById('pingSound');
+  if (ping) {
+    ping.currentTime = 0;
+    ping.volume = 0.4;  // optional
+    ping.play().catch(() => {});
+  }
+}
