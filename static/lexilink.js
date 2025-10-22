@@ -33,8 +33,8 @@ function createLetters() {
     div.classList.add('letter-node', 'new');
     div.textContent = word[i];
 
-    div.style.left = ${120 + x}px;
-    div.style.top = ${120 + y}px;
+    div.style.left = `${120 + x}px`;
+    div.style.top = `${120 + y}px`;
 
     // Add dragging logic
     div.addEventListener('mousedown', startDrag);
