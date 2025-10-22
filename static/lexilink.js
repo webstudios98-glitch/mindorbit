@@ -76,20 +76,21 @@ function init() {
 
   // ---- Render letters around the circle ----
 function renderLetters() {
-  const plate = document.querySelector(".neon-tray"); // your black glowing plate
+  const plate = document.querySelector(".circle-plate"); // your glowing plate div
   const letterContainer = document.getElementById("letters");
-  letterContainer.innerHTML = ""; // clear old ones
+  letterContainer.innerHTML = ""; // clear old letters
 
   if (!plate || !currentLetters?.length) return;
 
+  // Center letters around the circle
   const total = currentLetters.length;
   const rect = plate.getBoundingClientRect();
   const centerX = rect.width / 2;
   const centerY = rect.height / 2;
-  const radius = Math.min(centerX, centerY) * 0.7;
+  const radius = Math.min(centerX, centerY) * 0.7; // distance from center
 
   currentLetters.forEach((letter, i) => {
-    const angle = (2 * Math.PI * i) / total - Math.PI / 2;
+    const angle = (2 * Math.PI * i) / total - Math.PI / 2; // even spacing
     const x = centerX + radius * Math.cos(angle);
     const y = centerY + radius * Math.sin(angle);
 
@@ -98,6 +99,7 @@ function renderLetters() {
     node.dataset.letter = letter.ch;
     node.textContent = letter.ch;
 
+    // letter style
     Object.assign(node.style, {
       position: "absolute",
       left: ${x - 30}px,
@@ -107,26 +109,27 @@ function renderLetters() {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      color: "white",
+      color: "#fff",
       fontSize: "28px",
-      fontWeight: "600",
+      fontWeight: "700",
       borderRadius: "50%",
-      border: "2px solid gold",
-      boxShadow: "0 0 15px gold",
       background: "rgba(255,255,255,0.05)",
+      border: "2px solid gold",
+      boxShadow: "0 0 20px gold",
       cursor: "pointer",
-      userSelect: "none",
       transition: "transform 0.2s, box-shadow 0.2s",
+      zIndex: 5,
     });
 
+    // click adds letter to input
     node.addEventListener("click", () => {
       wordInput.value += letter.ch;
       currentWord = wordInput.value.toUpperCase();
       node.style.transform = "scale(1.25)";
-      node.style.boxShadow = "0 0 25px #FFD700";
+      node.style.boxShadow = "0 0 30px #FFD700";
       setTimeout(() => {
         node.style.transform = "scale(1)";
-        node.style.boxShadow = "0 0 15px gold";
+        node.style.boxShadow = "0 0 20px gold";
       }, 200);
     });
 
