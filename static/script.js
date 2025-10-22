@@ -93,10 +93,10 @@ function showMood(mood) {
     moodResult.style.animation = 'moodGlow 1.5s ease-in-out infinite';
 
     // Play mood sound (fallback if missing)
-    let moodSound = new Audio(`sounds/${mood}.mp3`);
+    let moodSound = new Audio(`/static/sounds/${mood}.mp3`);
     moodSound.onerror = () => {
         console.warn(`Sound for ${mood} missing. Playing default.`);
-        new Audio('sounds/default.mp3').play();
+        new Audio('/static/sounds/default.mp3').play();
     };
     moodSound.play();
 
@@ -108,13 +108,13 @@ function showMood(mood) {
 
 // Badge unlock system
 function unlockBadge(mood) {
-    badgeImage.src = `badges/${mood}.png`;
+    badgeImage.src = `/static/badges/${mood}.png`;
     badgeText.textContent = `Badge Unlocked: ${mood.toUpperCase()}!`;
     badgePopup.classList.remove('hidden');
     setTimeout(() => badgePopup.classList.add('show'), 50);
 
     // Play badge sound
-    let badgeSound = new Audio('sounds/badge-unlock.mp3');
+    let badgeSound = new Audio('/static/sounds/badge-unlock.mp3');
     badgeSound.onerror = () => console.warn("Badge unlock sound missing.");
     badgeSound.play();
 
@@ -464,7 +464,7 @@ if (window.location.pathname.includes("moodgame.html")) {
 
   function ping(){
     // optional: soft chime if you add /sounds/chime.mp3
-    const a = new Audio("sounds/chime.mp3");
+    const a = new Audio("/static/sounds/chime.mp3");
     a.volume=0.35;
     a.play().catch(()=>{ /* ignore autoplay block */ });
   }
