@@ -46,8 +46,8 @@ window.addEventListener('load', () => {
       div.textContent = word[i];
 
       // position the node (centered)
-      div.style.left = ${Math.round(x - nodeSize / 2)}px;
-      div.style.top = ${Math.round(y - nodeSize / 2)}px;
+      div.style.left = `${Math.round(x - nodeSize / 2)}px`;
+      div.style.top = `${Math.round(y - nodeSize / 2)}px`;
 
       // pointer events: mouse + touch
       div.addEventListener('mousedown', startDrag);
