@@ -74,32 +74,30 @@
   }
 
   // ---- Render letters around the circle ----
-  function renderLetters() {
-    lettersEl.innerHTML = "";
-    const radius = lettersEl.offsetWidth / 2 - 40;
-    const center = lettersEl.offsetWidth / 2;
+function renderLetters() {
+  const letterContainer = document.getElementById("letters");
+  letterContainer.innerHTML = ""; // clear old letters
 
-     currentLetters.forEach((letter, i) => {
-      const angle = (i / currentLetters.length) * 2 * Math.PI - Math.PI / 2;
-      const x = center + radius * Math.cos(angle);
-      const y = center + radius * Math.sin(angle);
-
-      const node = document.createElement("div");
-      node.className = `letter-node ${letter.color}`;
-      node.style.left = `${x - 32}px`;
-      node.style.top = `${y - 32}px`;
-      node.dataset.letter = letter.ch;
-
-      const inner = document.createElement("div");
-      inner.className = "inner";
-      inner.textContent = letter.ch;
-      node.appendChild(inner);
-
-      node.addEventListener("click", () => addLetter(letter.ch, node));
-      lettersEl.appendChild(node);
-    });
+  // if you have no letter data, create some temporary random ones
+  if (!currentLetters || currentLetters.length === 0) {
+    const sample = ["A", "E", "R", "S", "T", "N"];
+    currentLetters = sample.map((c) => ({ char: c, color: "blue" }));
   }
 
+  currentLetters.forEach((letter, i) => {
+    const node = document.createElement("div");
+    node.className = letter-node ${letter.color};
+    node.textContent = letter.char; // 🧩 actually show letter text
+
+    // basic click or drag event if you’re using one
+    node.addEventListener("click", () => {
+      const wordInput = document.getElementById("wordInput");
+      wordInput.value += letter.char;
+    });
+
+    letterContainer.appendChild(node);
+  });
+}
   // ---- Word Creation ----
   function addLetter(ch, node) {
     currentWord += ch;
