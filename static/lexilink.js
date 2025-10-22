@@ -86,7 +86,7 @@ function renderLetters() {
 
   currentLetters.forEach((letter, i) => {
     const node = document.createElement("div");
-    node.className = letter-node ${letter.color};
+    node.className = `letter-node ${letter.color}`;
     node.textContent = letter.char; // 🧩 actually show letter text
 
     // basic click or drag event if you’re using one
