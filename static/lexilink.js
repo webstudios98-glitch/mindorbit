@@ -76,19 +76,20 @@ function init() {
 
   // ---- Render letters around the circle ----
 function renderLetters() {
-  const tray = document.getElementById("tray");
+  const plate = document.querySelector(".neon-tray"); // your black glowing plate
   const letterContainer = document.getElementById("letters");
-  letterContainer.innerHTML = ""; // clear old letters
+  letterContainer.innerHTML = ""; // clear old ones
 
-  if (!currentLetters || currentLetters.length === 0) return;
+  if (!plate || !currentLetters?.length) return;
 
   const total = currentLetters.length;
-  const centerX = tray.offsetWidth / 2;
-  const centerY = tray.offsetHeight / 2;
-  const radius = Math.min(centerX, centerY) * 0.7; // controls circle size
+  const rect = plate.getBoundingClientRect();
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const radius = Math.min(centerX, centerY) * 0.7;
 
   currentLetters.forEach((letter, i) => {
-    const angle = (2 * Math.PI * i) / total - Math.PI / 2; // spread evenly
+    const angle = (2 * Math.PI * i) / total - Math.PI / 2;
     const x = centerX + radius * Math.cos(angle);
     const y = centerY + radius * Math.sin(angle);
 
@@ -97,7 +98,6 @@ function renderLetters() {
     node.dataset.letter = letter.ch;
     node.textContent = letter.ch;
 
-    // 🔵 circular glowing style
     Object.assign(node.style, {
       position: "absolute",
       left: ${x - 30}px,
@@ -109,20 +109,25 @@ function renderLetters() {
       justifyContent: "center",
       color: "white",
       fontSize: "28px",
+      fontWeight: "600",
       borderRadius: "50%",
       border: "2px solid gold",
-      boxShadow: "0 0 12px gold",
+      boxShadow: "0 0 15px gold",
       background: "rgba(255,255,255,0.05)",
       cursor: "pointer",
       userSelect: "none",
-      transition: "transform 0.2s",
+      transition: "transform 0.2s, box-shadow 0.2s",
     });
 
     node.addEventListener("click", () => {
       wordInput.value += letter.ch;
       currentWord = wordInput.value.toUpperCase();
-      node.style.transform = "scale(1.2)";
-      setTimeout(() => (node.style.transform = "scale(1)"), 150);
+      node.style.transform = "scale(1.25)";
+      node.style.boxShadow = "0 0 25px #FFD700";
+      setTimeout(() => {
+        node.style.transform = "scale(1)";
+        node.style.boxShadow = "0 0 15px gold";
+      }, 200);
     });
 
     letterContainer.appendChild(node);
