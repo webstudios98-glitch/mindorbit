@@ -48,17 +48,17 @@
 }
 
 /* letter nodes container positioned above circle*/
-.letters {
+#letters {
   width: min(480px, 86vw);
   height: min(480px, 86vw);
   position: absolute;
   z-index: 10;
   display: block;
-  touch-action: none; /* allow touch dragging */
+  touch-action: none;
   top: 130px;
   left: 50%;
   transform: translateX(-50%);
-  point-events: none;
+  pointer-events: none;
 }
 
 /* each letter cell */
