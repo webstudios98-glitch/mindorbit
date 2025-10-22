@@ -46,3 +46,91 @@ function startBreathing() {
 // initial draw
 drawBreathingCircle();
 console.log("Static JS loaded!");
+// Breathing session toggle (Start / Stop)
+document.addEventListener('DOMContentLoaded', () => {
+  const startBtn = document.getElementById('startScanBtn') || document.getElementById('startBreathBtn') || document.querySelector('.start-btn');
+  const breatheCircle = document.querySelector('.breathe-circle') || document.getElementById('breatheCircle');
+  const moodText = document.getElementById('moodResult') || document.getElementById('statusText');
+  let sessionRunning = false;
+  let sessionInterval = null; // if you use intervals/timers
+
+  // helper to set button state
+  function setButtonState(running) {
+    if (!startBtn) return;
+    sessionRunning = !!running;
+    if (sessionRunning) {
+      startBtn.textContent = 'Stop';
+      startBtn.setAttribute('aria-label', 'Stop breathing session');
+      startBtn.classList.add('stop');    // for styling if you want
+      startBtn.classList.remove('start');
+    } else {
+      startBtn.textContent = 'Start';
+      startBtn.setAttribute('aria-label', 'Start breathing session');
+      startBtn.classList.add('start');
+      startBtn.classList.remove('stop');
+    }
+  }
+
+  // start behavior — play animation, sound, start timers
+  function startSession() {
+    // visual: add a class that triggers CSS animation (scale/pulse)
+    if (breatheCircle) breatheCircle.classList.add('breathing');
+
+    // optional: start background tone or guided voice
+    // if (toneAudio) toneAudio.play().catch(()=>{});
+
+    // set status text
+    if (moodText) moodText.textContent = 'Breathe In...';
+
+    // example timer logic (replace with your real timing/animation)
+    let step = 0;
+    sessionInterval = setInterval(() => {
+      step = (step + 1) % 3;
+      if (moodText) {
+        if (step === 0) moodText.textContent = 'Breathe In...';
+        else if (step === 1) moodText.textContent = 'Hold...';
+        else moodText.textContent = 'Breathe Out...';
+      }
+    }, 4000); // change duration as required
+
+    setButtonState(true);
+  }
+
+  // stop behavior — stop animation, sound, timers
+  function stopSession() {
+    if (breatheCircle) breatheCircle.classList.remove('breathing');
+
+    if (sessionInterval) {
+      clearInterval(sessionInterval);
+      sessionInterval = null;
+    }
+
+    // optional: stop audio
+    // if (toneAudio) { toneAudio.pause(); toneAudio.currentTime = 0; }
+
+    if (moodText) moodText.textContent = 'Session stopped.';
+    setButtonState(false);
+  }
+
+  // attach to button
+  if (startBtn) {
+    // ensure initial label
+    setButtonState(false);
+
+    startBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (!sessionRunning) {
+        startSession();
+      } else {
+        stopSession();
+      }
+    });
+  } else {
+    console.warn('Start/Stop button not found (id: startScanBtn or startBreathBtn or .start-btn).');
+  }
+
+  // optional: stop session when leaving page or on nav
+  window.addEventListener('beforeunload', () => {
+    if (sessionRunning) stopSession();
+  });
+});
