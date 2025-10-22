@@ -14,7 +14,9 @@ window.addEventListener('load', () => {
   // --- Config ---
   const randomWordSet = [
     "MIND", "CODE", "STAR", "PLAY", "LINK", "DATA",
-    "BYTE", "FLOW", "NODE", "TECH", "AI", "CLOUD"
+    "BYTE", "FLOW", "NODE", "TECH", "AI", "CLOUD", 
+    "WOLF", "DONE", "TATA" , "INK" , "LAY" , "MOOD" ,
+    "COOL" , "FOOL",
   ];
   const nodeSize = 65; // used for centering nodes
   let letters = [];    // DOM nodes
