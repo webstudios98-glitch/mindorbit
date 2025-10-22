@@ -83,7 +83,7 @@ function renderLetters() {
 
   currentLetters.forEach((letter, i) => {
     const node = document.createElement("div");
-    node.className = letter-node ${letter.color};
+    node.className = `letter-node ${letter.color}`;
     node.dataset.letter = letter.ch;
     node.textContent = letter.ch;
 
