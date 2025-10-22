@@ -597,5 +597,5 @@ async function sendMessage() {
     body: JSON.stringify({ message: userInput })
   });
   const data = await response.json();
-  document.getElementById("chatBox").innerHTML += <p><b>Robust AI:</b> ${data.reply}</p>;
+  document.getElementById("chatBox").innerHTML += `<p><b>Robust AI:</b> ${data.reply}</p>`;
 }
