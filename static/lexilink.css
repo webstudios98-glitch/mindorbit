@@ -214,5 +214,6 @@
 }
 .letter-ring {
   position: relative;
-  top: 40px;  /* moves it slightly down */
+  top: 0; 
+  transform: translateY(-10px);
 }
