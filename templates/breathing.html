@@ -4,17 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MindOrbit - Breathing Session</title>
- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <canvas id="bgCanvas"></canvas>
   <a href="/moodgame" class="back-btn">⬅ Back</a>
 
-
   <header>
     <h1>🌌 MindOrbit</h1>
-<nav>
-   <a href="/home">Home</a>
+    <nav>
+      <a href="/home">Home</a>
       <a href="/chat">Chat</a>
       <a href="/moodgame">Moodgames</a>
       <a href="/noteheart">NoteHeart</a>
@@ -22,32 +21,27 @@
       <a href="/badges">Badges</a>
       <a href="/feedback">Feedback</a>
       <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-
+      <a href="/contact">Contact</a>
       <a href="/">Sign Up</a>
-
-
-
-  </nav>
+    </nav>
   </header>
 
   <main>
     <section class="futuristic-card">
-      <h2>🌬️ Breathing Session</h2>
+      <h2>🌬 Breathing Session</h2>
       <p>Follow the circle: breathe in, hold, and breathe out.</p>
       <canvas id="breathingCanvas" width="400" height="400"></canvas>
       <p id="breathingText">Ready?</p>
-     <button id="startBreathBtn" class="start-btn">Start</button>
+      <button id="startBreathBtn" class="start-btn">Start</button>
     </section>
   </main>
-<footer>
-  <p>© 2025 MindOrbit · -A Safe place by Raheen </p>
 
+  <footer>
+    <p>© 2025 MindOrbit · A Safe Place by Raheen</p>
+  </footer>
 
-  <!-- link directly since js is in same folder -->
- 
- <script src="{{ url_for('static', filename='script.js') }}"></script>
- <script src="{{ url_for('static', filename='breathing.js') }}"></script>
-
+  <!-- ✅ Scripts should be outside footer, before body closes -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script src="{{ url_for('static', filename='breathing.js') }}"></script>
 </body>
 </html>
