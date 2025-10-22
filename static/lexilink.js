@@ -76,35 +76,53 @@ function init() {
 
   // ---- Render letters around the circle ----
 function renderLetters() {
+  const tray = document.getElementById("tray");
   const letterContainer = document.getElementById("letters");
   letterContainer.innerHTML = ""; // clear old letters
 
   if (!currentLetters || currentLetters.length === 0) return;
 
+  const total = currentLetters.length;
+  const centerX = tray.offsetWidth / 2;
+  const centerY = tray.offsetHeight / 2;
+  const radius = Math.min(centerX, centerY) * 0.7; // controls circle size
+
   currentLetters.forEach((letter, i) => {
+    const angle = (2 * Math.PI * i) / total - Math.PI / 2; // spread evenly
+    const x = centerX + radius * Math.cos(angle);
+    const y = centerY + radius * Math.sin(angle);
+
     const node = document.createElement("div");
-    node.className = `letter-node ${letter.color}`;
+    node.className = letter-node ${letter.color};
     node.dataset.letter = letter.ch;
     node.textContent = letter.ch;
 
-    // 🔵 simple visible styling inline (override CSS)
-    node.style.display = "inline-flex";
-    node.style.alignItems = "center";
-    node.style.justifyContent = "center";
-    node.style.width = "60px";
-    node.style.height = "60px";
-    node.style.border = "2px solid gold";
-    node.style.borderRadius = "50%";
-    node.style.color = "white";
-    node.style.fontSize = "24px";
-    node.style.margin = "10px";
-    node.style.boxShadow = "0 0 10px gold";
-    node.style.cursor = "pointer";
+    // 🔵 circular glowing style
+    Object.assign(node.style, {
+      position: "absolute",
+      left: ${x - 30}px,
+      top: ${y - 30}px,
+      width: "60px",
+      height: "60px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "white",
+      fontSize: "28px",
+      borderRadius: "50%",
+      border: "2px solid gold",
+      boxShadow: "0 0 12px gold",
+      background: "rgba(255,255,255,0.05)",
+      cursor: "pointer",
+      userSelect: "none",
+      transition: "transform 0.2s",
+    });
 
     node.addEventListener("click", () => {
-      const wordInput = document.getElementById("wordInput");
       wordInput.value += letter.ch;
       currentWord = wordInput.value.toUpperCase();
+      node.style.transform = "scale(1.2)";
+      setTimeout(() => (node.style.transform = "scale(1)"), 150);
     });
 
     letterContainer.appendChild(node);
