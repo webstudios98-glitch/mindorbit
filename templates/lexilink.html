@@ -38,27 +38,26 @@
       <p class="sub">Drag letters or tap to build real words — focus & relax ✨</p>
     </header>
 
-    <section class="lexi-board">
-      <!-- 🍪 Word Cookies–style circular tray -->
-<div id="game-board">
-  <div class="circle-plate">
-    <div id="letters"></div>
+ <section class="lexi-board">
+  <div id="game-board">
+    <div class="circle-plate"></div>
   </div>
-</div>
 
-      <!-- user controls -->
-      <div class="controls">
-        <input id="wordInput" type="text" placeholder="Type or drag letters here" autocomplete="off" aria-label="Your word">
-        <button id="submitBtn">Submit</button>
-        <button id="clearBtn" class="secondary">Clear</button>
-      </div>
+  <div id="word-display"></div>
 
-      <div class="game-info">
-        <span id="timer">⏳ 60s</span>
-        <span id="score">Score: 0</span>
-        <div id="message" class="msg"></div>
-      </div>
-    </section>
+  <!-- user controls -->
+  <div class="controls">
+    <input id="wordInput" type="text" placeholder="Type or drag letters here" autocomplete="off" aria-label="Your word">
+    <button id="submitBtn">Submit</button>
+    <button id="clearBtn" class="secondary">Clear</button>
+  </div>
+
+  <div class="game-info">
+    <span id="timer">⏳ 60s</span>
+    <span id="score">Score: 0</span>
+    <div id="message" class="msg"></div>
+  </div>
+</section>
 
     <footer class="lexi-footer">
       <small>Single-level endless mode — relax & play ✨</small>
