@@ -134,7 +134,7 @@ window.addEventListener('load', () => {
 
       setTimeout(() => createLetters(), 700);
     } else {
-      wordDisplay.textContent = ❌ ${upper} not valid;
+      wordDisplay.textContent = `❌ ${upper} not valid`;
       wordDisplay.style.color = "#ff6961";
       // reset so player can try again
       setTimeout(() => {
