@@ -79,7 +79,7 @@
     const radius = lettersEl.offsetWidth / 2 - 40;
     const center = lettersEl.offsetWidth / 2;
 
-    let currentLetters.forEach((letter, i) => {
+     currentLetters.forEach((letter, i) => {
       const angle = (i / currentLetters.length) * 2 * Math.PI - Math.PI / 2;
       const x = center + radius * Math.cos(angle);
       const y = center + radius * Math.sin(angle);
