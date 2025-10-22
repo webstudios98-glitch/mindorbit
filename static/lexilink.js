@@ -102,8 +102,8 @@ function renderLetters() {
     // letter style
     Object.assign(node.style, {
       position: "absolute",
-      left: ${x - 30}px,
-      top: ${y - 30}px,
+      left: `${x - 30}px`,
+      top: `${y - 30}px`,
       width: "60px",
       height: "60px",
       display: "flex",
