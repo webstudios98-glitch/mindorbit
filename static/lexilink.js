@@ -79,21 +79,32 @@ function renderLetters() {
   const letterContainer = document.getElementById("letters");
   letterContainer.innerHTML = ""; // clear old letters
 
-  // if you have no letter data, create some temporary random ones
-  if (!currentLetters || currentLetters.length === 0) {
-    const sample = ["A", "E", "R", "S", "T", "N"];
-    currentLetters = sample.map((c) => ({ char: c, color: "blue" }));
-  }
+  if (!currentLetters || currentLetters.length === 0) return;
 
   currentLetters.forEach((letter, i) => {
     const node = document.createElement("div");
-    node.className = `letter-node ${letter.color}`;
-    node.textContent = letter.char; // 🧩 actually show letter text
+    node.className = letter-node ${letter.color};
+    node.dataset.letter = letter.ch;
+    node.textContent = letter.ch;
 
-    // basic click or drag event if you’re using one
+    // 🔵 simple visible styling inline (override CSS)
+    node.style.display = "inline-flex";
+    node.style.alignItems = "center";
+    node.style.justifyContent = "center";
+    node.style.width = "60px";
+    node.style.height = "60px";
+    node.style.border = "2px solid gold";
+    node.style.borderRadius = "50%";
+    node.style.color = "white";
+    node.style.fontSize = "24px";
+    node.style.margin = "10px";
+    node.style.boxShadow = "0 0 10px gold";
+    node.style.cursor = "pointer";
+
     node.addEventListener("click", () => {
       const wordInput = document.getElementById("wordInput");
-      wordInput.value += letter.char;
+      wordInput.value += letter.ch;
+      currentWord = wordInput.value.toUpperCase();
     });
 
     letterContainer.appendChild(node);
