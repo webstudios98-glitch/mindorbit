@@ -48,30 +48,31 @@
   }
 
   // ---- Init ----
-  function init() {
-    const letters = generatePlayableLetters();
-    currentLetters = letters.map((ch, i) => ({
-      ch,
-      color: NODE_COLORS[i % NODE_COLORS.length]
-    }));
+function init() {
+  const letters = generatePlayableLetters();
+  currentLetters = letters.map((ch, i) => ({
+    ch,
+    color: NODE_COLORS[i % NODE_COLORS.length]
+  }));
 
-   function renderLetters() {
-    startTimer() };
+  // ✅ render the letters correctly and start timer
+  renderLetters();
+  startTimer();
 
-    submitBtn.addEventListener("click", submitWord);
-    clearBtn.addEventListener("click", clearWord);
-    wordInput.addEventListener("input", () => {
-      currentWord = wordInput.value.toUpperCase();
-    });
+  submitBtn.addEventListener("click", submitWord);
+  clearBtn.addEventListener("click", clearWord);
+  wordInput.addEventListener("input", () => {
+    currentWord = wordInput.value.toUpperCase();
+  });
 
-    lettersEl.addEventListener("mousedown", startDrag);
-    lettersEl.addEventListener("mousemove", moveDrag);
-    window.addEventListener("mouseup", endDrag);
+  lettersEl.addEventListener("mousedown", startDrag);
+  lettersEl.addEventListener("mousemove", moveDrag);
+  window.addEventListener("mouseup", endDrag);
 
-    lettersEl.addEventListener("touchstart", startDrag, { passive: false });
-    lettersEl.addEventListener("touchmove", moveDrag, { passive: false });
-    window.addEventListener("touchend", endDrag);
-  }
+  lettersEl.addEventListener("touchstart", startDrag, { passive: false });
+  lettersEl.addEventListener("touchmove", moveDrag, { passive: false });
+  window.addEventListener("touchend", endDrag);
+}
 
   // ---- Render letters around the circle ----
 function renderLetters() {
