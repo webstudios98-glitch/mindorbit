@@ -1,197 +1,123 @@
-/* --- Base page setup --- */
-body {
+/* === GENERAL PAGE SETUP === */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #1b1b2f, #16213e);
   font-family: 'Poppins', sans-serif;
-  background: radial-gradient(circle at top, #0b0b1f 0%, #000 100%);
   color: #fff;
-  min-height: 100vh;
-  overflow: hidden;
+  overflow-y: auto;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
-/* --- Back button --- */
-.back-btn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: rgba(0, 255, 255, 0.2);
-  padding: 8px 16px;
-  border-radius: 12px;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: 0.2s;
-}
-.back-btn:hover {
-  background: rgba(0, 255, 255, 0.5);
-}
-
-/* --- Main shell --- */
-.lexi-shell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  width: 100%;
-  text-align: center;
-}
-
-/* --- Header --- */
-.lexi-header h1 {
-  font-size: 2.2rem;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #0ff, #0f8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.3em;
-}
-
-.sub {
-  color: #ccc;
-  font-size: 0.9rem;
-  margin-bottom: 1em;
-}
-
-/* --- Game Board --- */
-.lexi-board {
+/* === MAIN CONTAINER === */
+#game {
   position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 40px 30px;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
+  padding: 100px 0;
 }
 
-/* --- Circular Plate --- */
+/* === CIRCLE BACKGROUND (PLATE) === */
 .circle-plate {
   position: relative;
-  width: 250px;
-  height: 250px;
-  margin: 0 auto 25px;
+  width: 260px;
+  height: 260px;
+  margin: 0 auto;
   border-radius: 50%;
-  background: radial-gradient(circle at center, rgba(0, 255, 255, 0.15), rgba(0, 0, 40, 0.9));
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.3);
-  transform: translateY(-10px); /* lift plate */
+  flex-wrap: wrap;
+  transition: transform 0.4s ease;
 }
 
-/* --- Letter Nodes --- */
+.circle-plate:hover {
+  transform: scale(1.02);
+}
+
+/* === LETTER NODES === */
 .letter-node {
   position: absolute;
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
+  line-height: 65px;
   border-radius: 50%;
-  background: radial-gradient(circle, #fde7ff, #b38bff);
-  color: #000;
-  font-weight: 700;
-  font-size: 1.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  background: linear-gradient(145deg, #4e54c8, #8f94fb);
+  color: #fff;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: grab;
+  user-select: none;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Hover Effect */
 .letter-node:hover {
-  transform: scale(1.15);
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 
-/* Active Letter (while dragging) */
+/* When being dragged */
 .letter-node.active {
-  transform: scale(1.3);
-  background: radial-gradient(circle, #00eaff, #0073ff);
-  color: #fff;
-  box-shadow: 0 0 15px #00eaff, 0 0 40px #00eaff;
-  z-index: 999;
+  transform: scale(1.15);
+  background: linear-gradient(145deg, #00c6ff, #0072ff);
+  box-shadow: 0 0 20px #00c6ff;
+  cursor: grabbing;
 }
 
-/* --- Connection Line between letters --- */
-.connection-line {
-  position: absolute;
-  background: rgba(0, 255, 255, 0.6);
-  height: 6px;
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 800;
-}
-
-/* --- Controls --- */
-.controls {
-  margin-top: 20px;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-.controls input {
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  width: 200px;
-  font-size: 1rem;
-}
-
-.controls button {
-  background: linear-gradient(90deg, #00eaff, #00ffb3);
-  color: #000;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 10px;
-  cursor: pointer;
+/* === WORD DISPLAY AREA === */
+#word-display {
+  margin-top: 40px;
+  font-size: 1.6rem;
   font-weight: 600;
-  transition: 0.2s;
-}
-.controls button:hover {
-  transform: scale(1.08);
-}
-
-button.secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  letter-spacing: 2px;
+  color: #ffd369;
+  text-shadow: 0 0 10px rgba(255, 211, 105, 0.4);
 }
 
-/* --- Info section --- */
-.game-info {
-  margin-top: 18px;
-  font-size: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
+/* === ANIMATION FOR NEW LETTERS === */
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
-.msg {
-  color: #0ff;
-  font-weight: 600;
-  margin-top: 5px;
+.letter-node.new {
+  animation: pop 0.4s ease-in-out;
 }
 
-/* --- Footer --- */
-.lexi-footer {
-  margin-top: 15px;
-  font-size: 0.85rem;
-  color: #aaa;
-}
-
-/* --- Responsive Fix --- */
-@media (max-width: 600px) {
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 480px) {
   .circle-plate {
-    width: 190px;
-    height: 190px;
+    width: 220px;
+    height: 220px;
   }
 
   .letter-node {
     width: 55px;
     height: 55px;
+    line-height: 55px;
+    font-size: 18px;
+  }
+
+  #word-display {
     font-size: 1.4rem;
   }
 }
