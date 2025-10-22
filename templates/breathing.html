@@ -35,12 +35,11 @@
       <button id="startBreathBtn" class="start-btn">Start</button>
     </section>
   </main>
-
-  <footer>
-    <p>© 2025 MindOrbit · A Safe Place by Raheen</p>
+<footer>
+    <p>© 2025 MindOrbit · A Safe place by Raheen</p>
   </footer>
 
-  <!-- ✅ Scripts should be outside footer, before body closes -->
+  <!-- ✅ Scripts should always go just before </body> -->
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <script src="{{ url_for('static', filename='breathing.js') }}"></script>
 </body>
