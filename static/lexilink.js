@@ -95,7 +95,7 @@ function renderLetters() {
     const y = centerY + radius * Math.sin(angle);
 
     const node = document.createElement("div");
-    node.className = letter-node ${letter.color};
+    node.className = `letter-node ${letter.color}`;
     node.dataset.letter = letter.ch;
     node.textContent = letter.ch;
 
