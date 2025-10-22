@@ -153,3 +153,4 @@ window.addEventListener('load', () => {
   // initial
   createLetters();
 });
+document.getElementById('pingSound').play();
