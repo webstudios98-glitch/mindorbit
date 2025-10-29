@@ -759,3 +759,8 @@ canvas#lineCanvas {
 }
 .breathe-circle.breathing { animation: breathe 6s ease-in-out infinite; }
 @keyframes breathe { 0%,100%{ transform: scale(0.8); } 50%{ transform: scale(1.2); } }
+<style>
+body {
+    padding-bottom: 80px;
+}
+</style>
