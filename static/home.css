@@ -1,117 +1,107 @@
 body {
   margin: 0;
-  font-family: "Poppins", sans-serif;
-  background: radial-gradient(circle at top, #060613, #02010a);
+  padding: 0;
   color: #fff;
+  font-family: 'Poppins', sans-serif;
+  background: radial-gradient(circle at top, #0a0126, #02010f);
   overflow-x: hidden;
 }
 
-/* floating stars */
-canvas#stars {
+/* Background Galaxy Animation */
+#bgCanvas {
   position: fixed;
   top: 0; left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   z-index: -1;
 }
 
-/* header */
+/* Header */
 header {
   text-align: center;
   padding: 1rem 0;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255,255,255,0.03);
   backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-header h1 {
-  color: #00ffe0;
-  margin: 0;
-  font-size: 1.8rem;
-  letter-spacing: 1px;
+.logo {
+  font-size: 2.2rem;
+  background: linear-gradient(90deg, #00eaff, #ff66ff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+nav {
+  margin-top: 10px;
 }
 nav a {
-  color: #fff;
+  margin: 0 10px;
+  color: #b8b8ff;
   text-decoration: none;
-  margin: 0 8px;
   transition: 0.3s;
 }
 nav a:hover {
-  color: #00ffe0;
+  color: #fff;
+  text-shadow: 0 0 10px #ff66ff;
 }
 
-/* hero */
-.hero {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+/* Intro */
+.intro {
   text-align: center;
+  padding: 6rem 2rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent);
 }
-.hero h2 {
+.intro h2 {
   font-size: 2.5rem;
-  background: linear-gradient(90deg, #00ffe0, #ff00ff);
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: glowText 3s infinite alternate;
+  margin-bottom: 10px;
+  color: #ff66ff;
 }
-@keyframes glowText {
-  from { text-shadow: 0 0 10px #00ffe0; }
-  to { text-shadow: 0 0 20px #ff00ff; }
-}
-.hero p {
-  max-width: 600px;
-  opacity: 0.9;
-}
-.hero button {
-  margin-top: 20px;
-  padding: 12px 24px;
+.intro button {
+  margin-top: 1.5rem;
+  padding: 10px 25px;
+  background: linear-gradient(90deg, #00eaff, #ff66ff);
   border: none;
-  border-radius: 8px;
-  background: linear-gradient(90deg, #00ffe0, #ff00ff);
+  border-radius: 25px;
   color: white;
-  font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
 }
-.hero button:hover {
-  transform: scale(1.1);
+.intro button:hover {
+  transform: scale(1.05);
 }
 
-/* sections */
-section.feature {
-  padding: 80px 20px;
-  text-align: center;
+/* Features */
+.features {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.feature {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: all 0.8s ease;
 }
-section.feature.visible {
+.feature.visible {
   opacity: 1;
   transform: translateY(0);
 }
-section.feature h2 {
-  color: #00ffe0;
-  font-size: 1.8rem;
+.feature h2 {
+  color: #00eaff;
+  margin-bottom: 10px;
 }
-section.feature p {
-  max-width: 600px;
-  margin: 0 auto;
-  opacity: 0.85;
-}
-
-/* contact */
-.feature.contact p strong {
-  color: #ffb3ff;
+.feature p {
+  line-height: 1.6;
+  color: #d6d6ff;
 }
 
-/* footer */
+/* Footer */
 footer {
   text-align: center;
-  padding: 20px 0;
+  padding: 1rem;
   font-size: 0.9rem;
-  opacity: 0.7;
-  background: rgba(255, 255, 255, 0.05);
+  color: #aaa;
+  background: rgba(255,255,255,0.02);
 }
