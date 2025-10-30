@@ -1,49 +1,38 @@
-// floating stars animation
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
+// Smooth Scroll to Features
+function scrollToFeatures() {
+  document.querySelector('.features').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Background Galaxy Effect
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
 let stars = [];
-
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
-for (let i = 0; i < 100; i++) {
-  stars.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    radius: Math.random() * 1.5,
-    speed: Math.random() * 0.3
-  });
+for (let i = 0; i < 150; i++) {
+  stars.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: Math.random() * 1.5 });
 }
 
-function drawStars() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#00ffe0";
-  for (let s of stars) {
+function animateStars() {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  ctx.fillStyle = '#fff';
+  stars.forEach(s => {
     ctx.beginPath();
-    ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
     ctx.fill();
-    s.y += s.speed;
-    if (s.y > canvas.height) s.y = 0;
-  }
-  requestAnimationFrame(drawStars);
+    s.y += 0.2;
+    if (s.y > innerHeight) s.y = 0;
+  });
+  requestAnimationFrame(animateStars);
 }
-drawStars();
+animateStars();
 
-// smooth scroll on button click
-document.getElementById("scrollDown").addEventListener("click", () => {
-  window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
-});
-
-// fade-in on scroll
-const sections = document.querySelectorAll(".feature");
-window.addEventListener("scroll", () => {
-  const trigger = window.innerHeight * 0.8;
-  sections.forEach(sec => {
-    const rect = sec.getBoundingClientRect();
-    if (rect.top < trigger) sec.classList.add("visible");
+// Fade-in Animation on Scroll
+const features = document.querySelectorAll('.feature');
+window.addEventListener('scroll', () => {
+  features.forEach(f => {
+    const rect = f.getBoundingClientRect();
+    if (rect.top < window.innerHeight - 100) f.classList.add('visible');
   });
 });
