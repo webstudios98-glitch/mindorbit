@@ -19,7 +19,8 @@ def ping_sound():
 
 @app.route('/bg-music.mp3')
 def bg_music():
-    return send_from_directory('static','bg-music.mp3')
+    return send_from_directory('static',
+                               'bg-music.mp3')
 # ------------------------------------------------------
 # API Setup — using OpenRouter + DeepSeek
 # ------------------------------------------------------
