@@ -11,9 +11,6 @@
   <!-- Background Galaxy Canvas -->
   <canvas id="bgCanvas"></canvas>
 
-  <!-- Background Music -->
-  <audio id="bgMusic" src="{{ url_for('static', filename='/bg.mp3') }}" autoplay loop></audio>
-
   <header>
     <h1 class="logo">🌌 MindOrbit</h1>
     <nav>
@@ -105,6 +102,38 @@
   <footer>
     <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
   </footer>
+  <!-- Background Music -->
+<audio id="bgMusic" src="{{ url_for('static', filename='bg-music.mp3') }}" loop></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("bgMusic");
+  audio.volume = 0.5;
+
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      const startMusic = () => {
+        // Optional fade-in effect
+        audio.volume = 0;
+        audio.play();
+        let volume = 0;
+        const fade = setInterval(() => {
+          if (volume < 0.5) {
+            volume += 0.02;
+            audio.volume = volume;
+          } else clearInterval(fade);
+        }, 200);
+
+        document.removeEventListener("click", startMusic);
+        document.removeEventListener("touchstart", startMusic);
+      };
+      document.addEventListener("click", startMusic);
+      document.addEventListener("touchstart", startMusic);
+    });
+  }
+});
+</script>
 
   <script src="{{ url_for('static', filename='home.js') }}"></script>
 </body>
