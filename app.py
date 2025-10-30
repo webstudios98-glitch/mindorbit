@@ -16,6 +16,10 @@ from flask import send_from_directory
 @app.route('/ping.mp3')
 def ping_sound():
     return send_from_directory(".", "ping.mp3")
+
+@app.route('/bg-music.mp3')
+def bg_music():
+    return send_from_directory('static','bg-music.mp3')
 # ------------------------------------------------------
 # API Setup — using OpenRouter + DeepSeek
 # ------------------------------------------------------
