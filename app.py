@@ -121,6 +121,11 @@ def chat():
 # ------------------------------------------------------
 # OTHER ROUTES (Games, Notes, About, etc.)
 # ------------------------------------------------------
+
+@app.route("/scanner")
+def moodgame():
+    return render_template("scanner.html")
+
 @app.route("/moodgame")
 def moodgame():
     return render_template("moodgame.html")
