@@ -103,8 +103,7 @@
     <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
   </footer>
   <!-- Background Music -->
-<audio id="bgMusic" src="{{ url_for('static', filename='bg-music.mp3') }}" loop></audio>
-
+<audio id="bgMusic" src="{{ url_for('bg_music') }}" autoplay loop></audio>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("bgMusic");
