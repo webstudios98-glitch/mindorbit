@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MindOrbit — A Safe Space</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindOrbit — A Safe Place</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 </head>
 <body>
-  <canvas id="stars"></canvas>
+
+  <!-- Background Galaxy Canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" src="{{ url_for('static', filename='sounds/bg.mp3') }}" autoplay loop></audio>
 
   <header>
-    <h1>🌌 MindOrbit</h1>
+    <h1 class="logo">🌌 MindOrbit</h1>
     <nav>
       <a href="/scanner">Scanner</a>
       <a href="/chat">Chat</a>
-      <a href="/moodgame">Moodgames</a>
+      <a href="/moodgame">MoodGames</a>
       <a href="/noteheart">NoteHeart</a>
       <a href="/calmspace">CalmSpace</a>
       <a href="/badges">Badges</a>
@@ -24,77 +29,71 @@
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h2>Welcome to <span>MindOrbit</span></h2>
-      <p>Where technology meets peace — scan, reflect, and heal your mind.</p>
-      <button id="scrollDown">Begin Your Journey ↓</button>
+  <main>
+    <!-- INTRO -->
+    <section class="intro">
+      <h2>Welcome to MindOrbit</h2>
+      <p>A futuristic safe place where emotions, calmness, and technology meet. Let your mind orbit freely — explore, feel, and heal.</p>
+      <button onclick="scrollToFeatures()">🌠 Start Your Journey</button>
+    </section>
+
+    <!-- SECTIONS -->
+    <div class="features">
+      <!-- SCANNER -->
+      <section class="feature">
+        <h2>🔮 Mood Scanner</h2>
+        <p>MOOD SCANNER scans your mood with cheerful background sounds to uplift you — no matter how rough the day is, MindOrbit listens to your heart.</p>
+      </section>
+
+      <!-- CHAT -->
+      <section class="feature">
+        <h2>💬 Chat Companion</h2>
+        <p>Talk to an AI that listens and uplifts. Share your feelings freely — your words stay private. This humanized AI understands you even when no one else does.</p>
+      </section>
+
+      <!-- MOOD GAMES -->
+      <section class="feature">
+        <h2>🎮 Mood Games</h2>
+        <p>Play your feelings out with relaxing, creative, and emotional games — breathing, DotConnect, soothing sounds, painting, quotes, Lexilink, and Little Alchemy — each one designed to heal through joy and discovery.</p>
+      </section>
+
+      <!-- NOTEHEART -->
+      <section class="feature">
+        <h2>📝 NoteHeart</h2>
+        <p>Write what your heart feels. It's completely anonymous — your personal emotional notebook. Write, release, and feel lighter instantly.</p>
+      </section>
+
+      <!-- CALMSPACE -->
+      <section class="feature">
+        <h2>🌿 CalmSpace</h2>
+        <p>Practice mindfulness with breathing exercises, affirmations, and peaceful visuals. It helps you slow down and rediscover peace in your mind.</p>
+      </section>
+
+      <!-- BADGES -->
+      <section class="feature">
+        <h2>🏅 Achievements</h2>
+        <p>Earn badges as you explore MindOrbit — each moment of reflection, each small victory, each smile counts.</p>
+      </section>
+
+      <!-- FEEDBACK -->
+      <section class="feature">
+        <h2>💌 Feedback</h2>
+        <p>We’d love to hear from you! Your words help shape the safe and healing space we build together.</p>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="feature">
+        <h2>✨ About MindOrbit</h2>
+        <p>MindOrbit is a futuristic mental health platform designed to nurture positivity, calm, and emotional understanding through immersive experiences.</p>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="feature contact">
+        <h2>📞 Contact Us</h2>
+        <p>Reach us anytime at <strong>freshminds@mindorbit.in</strong></p>
+      </section>
     </div>
-  </section>
-
-  <!-- SCANNER -->
-  <section class="feature">
-    <h2>🔮 Mood Scanner</h2>
-    <p>MOOD SCANNER it scans your mood with the funny sounds at the background so to cheer your mood, no matter how rough the day is, no matter how sad you are.</p> 
-  </section>
-
-  <!-- CHAT -->
-  <section class="feature">
-    <h2>💬 Chat Companion</h2>
-    <p>Talk to an AI that listens and uplifts. Share your feelings freely — your words stay private.
-    This is the place where your getting introduced to humanize AI, share your thoughts how you feel, the AI always listens to you understands you when you have no one. </p>
-  </section>
-
-  <!-- MOOD GAMES -->
-  <section class="feature">
-    <h2>🎮 Mood Games</h2>
-    <p>Play your feelings out. Relaxing, creative and emotional games to heal through joy and discovery.
-    Breathing- relax your mind by breathing session and move to other games and activities to cheer yourself.
-    DotConnect- connect different glowing colors.
-    Soothingsounds- it plays relaxing sounds from nature to asmr, the sounds that can soothes your thoughts and moods just you, sounds and complete silence so you feel your way.
-    Painting- you can draw anything with glowing colors choose your own color and paint things and save it.
-    Quote oracle- feeling motivationless? Have no one to motivate you? Unfold the quote.
-    Lexilink- match the letters to make your words.
-    Little alchemy- want to discover new things? How the things can be mixed to make a new entity? just play little alchemy.</p>
-  </section>
-
-  <!-- NOTEHEART -->
-  <section class="feature">
-    <h2>📝 NoteHeart</h2>
-    <p>Write what your heart feels. It`s completely anonymous it`s your own place whatever you write no one will get to know that and then and there you can clear it also.</p>
-  </section>
-
-  <!-- CALMSPACE -->
-  <section class="feature">
-    <h2>🌿 CalmSpace</h2>
-    <p>Practice mindfulness with breathing exercises, new affirmations, and peaceful visuals.
-    It not only tells the tricks for excercise but also give you some cheering lines so to make your mood light.</p>
-  </section>
-
-  <!-- BADGES -->
-  <section class="feature">
-    <h2>🏅 Achievements</h2>
-    <p>Collect badges as you explore. Every reflection, every breath, every small victory matters.</p>
-  </section>
-
-  <!-- FEEDBACK -->
-  <section class="feature">
-    <h2>💌 Feedback</h2>
-    <p>We’d love to hear from you! Your words help shape the safe and healing space we build together.</p>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="feature">
-    <h2>✨ About MindOrbit</h2>
-    <p>MindOrbit is a futuristic platform designed to nurture calm, positivity, and emotional understanding through interactive experiences.</p>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="feature contact">
-    <h2>📞 Contact Us</h2>
-    <p>Reach us anytime at <strong>freshminds@mindorbit.in</strong></p>
-  </section>
+  </main>
 
   <footer>
     <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
