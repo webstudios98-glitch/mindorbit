@@ -123,7 +123,7 @@ def chat():
 # ------------------------------------------------------
 
 @app.route("/scanner")
-def moodgame():
+def scanner():
     return render_template("scanner.html")
 
 @app.route("/moodgame")
