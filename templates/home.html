@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindOrbit - A Safe Place</title>
+
+  <!-- ✅ Only for homepage -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <header>
+    <h1>🌌 MindOrbit</h1>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <nav id="navMenu">
+      <a href="/scanner">Scanner</a>
+      <a href="/chat">Chat</a>
+      <a href="/moodgame">MoodGames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="floating">Welcome to MindOrbit</h1>
+      <p>Where emotions find calm and creativity meets peace.</p>
+      <a href="/scanner" class="explore-btn">✨ Begin Your Journey</a>
+    </section>
+
+    <section class="feature" data-bg="scanner">
+      <h2>🔮 Mood Scanner</h2>
+      <p>Detect your emotions with AI-powered calm insights.</p>
+    </section>
+
+    <section class="feature" data-bg="chat">
+      <h2>🤖 Chat Companion</h2>
+      <p>Talk to an AI that listens, understands, and uplifts.</p>
+    </section>
+
+    <section class="feature" data-bg="games">
+      <h2>🎮 Mood Games</h2>
+      <p>Explore creative and relaxing games to refresh your mind.</p>
+    </section>
+
+    <section class="feature" data-bg="noteheart">
+      <h2>💭 NoteHeart</h2>
+      <p>Write your heart out anonymously — your thoughts are safe here.</p>
+    </section>
+
+    <section class="feature" data-bg="calmspace">
+      <h2>🌿 CalmSpace</h2>
+      <p>Practice mindfulness with breathing exercises and soothing sounds.</p>
+    </section>
+
+    <section class="feature" data-bg="badges">
+      <h2>🏅 Badges</h2>
+      <p>Earn badges as you explore your inner calm and creativity.</p>
+    </section>
+
+    <section class="feature" data-bg="feedback">
+      <h2>💌 Feedback</h2>
+      <p>Share your thoughts and help us make MindOrbit even better.</p>
+    </section>
+
+    <section class="feature" data-bg="about">
+      <h2>👩‍🚀 About MindOrbit</h2>
+      <p>A futuristic safe space built to nurture emotions and positivity.</p>
+    </section>
+
+    <section class="feature" data-bg="contact">
+      <h2>📬 Contact Us</h2>
+      <p>Reach us anytime at <strong>freshminds@mindorbit.in</strong></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
+  </footer>
+
+  <!-- ✅ Only for homepage -->
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+</body>
+</html>
