@@ -1,25 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MindOrbit - A Safe Place</title>
-
-  <!-- ✅ Only for homepage -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='/home.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindOrbit — A Safe Space</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
 </head>
 <body>
-  <canvas id="bgCanvas"></canvas>
+  <canvas id="stars"></canvas>
 
   <header>
     <h1>🌌 MindOrbit</h1>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-    </div>
-    <nav id="navMenu">
+    <nav>
       <a href="/scanner">Scanner</a>
       <a href="/chat">Chat</a>
-      <a href="/moodgame">MoodGames</a>
+      <a href="/moodgame">Moodgames</a>
       <a href="/noteheart">NoteHeart</a>
       <a href="/calmspace">CalmSpace</a>
       <a href="/badges">Badges</a>
@@ -29,64 +24,82 @@
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1 class="floating">Welcome to MindOrbit</h1>
-      <p>Where emotions find calm and creativity meets peace.</p>
-      <a href="/scanner" class="explore-btn">✨ Begin Your Journey</a>
-    </section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Welcome to <span>MindOrbit</span></h2>
+      <p>Where technology meets peace — scan, reflect, and heal your mind.</p>
+      <button id="scrollDown">Begin Your Journey ↓</button>
+    </div>
+  </section>
 
-    <section class="feature" data-bg="scanner">
-      <h2>🔮 Mood Scanner</h2>
-      <p>Detect your emotions with AI-powered calm insights.</p>
-    </section>
+  <!-- SCANNER -->
+  <section class="feature">
+    <h2>🔮 Mood Scanner</h2>
+    <p>MOOD SCANNER it scans your mood with the funny sounds at the background so to cheer your mood, no matter how rough the day is, no matter how sad you are.</p> 
+  </section>
 
-    <section class="feature" data-bg="chat">
-      <h2>🤖 Chat Companion</h2>
-      <p>Talk to an AI that listens, understands, and uplifts.</p>
-    </section>
+  <!-- CHAT -->
+  <section class="feature">
+    <h2>💬 Chat Companion</h2>
+    <p>Talk to an AI that listens and uplifts. Share your feelings freely — your words stay private.
+    This is the place where your getting introduced to humanize AI, share your thoughts how you feel, the AI always listens to you understands you when you have no one. </p>
+  </section>
 
-    <section class="feature" data-bg="games">
-      <h2>🎮 Mood Games</h2>
-      <p>Explore creative and relaxing games to refresh your mind.</p>
-    </section>
+  <!-- MOOD GAMES -->
+  <section class="feature">
+    <h2>🎮 Mood Games</h2>
+    <p>Play your feelings out. Relaxing, creative and emotional games to heal through joy and discovery.
+    Breathing- relax your mind by breathing session and move to other games and activities to cheer yourself.
+    DotConnect- connect different glowing colors.
+    Soothingsounds- it plays relaxing sounds from nature to asmr, the sounds that can soothes your thoughts and moods just you, sounds and complete silence so you feel your way.
+    Painting- you can draw anything with glowing colors choose your own color and paint things and save it.
+    Quote oracle- feeling motivationless? Have no one to motivate you? Unfold the quote.
+    Lexilink- match the letters to make your words.
+    Little alchemy- want to discover new things? How the things can be mixed to make a new entity? just play little alchemy.</p>
+  </section>
 
-    <section class="feature" data-bg="noteheart">
-      <h2>💭 NoteHeart</h2>
-      <p>Write your heart out anonymously — your thoughts are safe here.</p>
-    </section>
+  <!-- NOTEHEART -->
+  <section class="feature">
+    <h2>📝 NoteHeart</h2>
+    <p>Write what your heart feels. It`s completely anonymous it`s your own place whatever you write no one will get to know that and then and there you can clear it also.</p>
+  </section>
 
-    <section class="feature" data-bg="calmspace">
-      <h2>🌿 CalmSpace</h2>
-      <p>Practice mindfulness with breathing exercises and soothing sounds.</p>
-    </section>
+  <!-- CALMSPACE -->
+  <section class="feature">
+    <h2>🌿 CalmSpace</h2>
+    <p>Practice mindfulness with breathing exercises, new affirmations, and peaceful visuals.
+    It not only tells the tricks for excercise but also give you some cheering lines so to make your mood light.</p>
+  </section>
 
-    <section class="feature" data-bg="badges">
-      <h2>🏅 Badges</h2>
-      <p>Earn badges as you explore your inner calm and creativity.</p>
-    </section>
+  <!-- BADGES -->
+  <section class="feature">
+    <h2>🏅 Achievements</h2>
+    <p>Collect badges as you explore. Every reflection, every breath, every small victory matters.</p>
+  </section>
 
-    <section class="feature" data-bg="feedback">
-      <h2>💌 Feedback</h2>
-      <p>Share your thoughts and help us make MindOrbit even better.</p>
-    </section>
+  <!-- FEEDBACK -->
+  <section class="feature">
+    <h2>💌 Feedback</h2>
+    <p>We’d love to hear from you! Your words help shape the safe and healing space we build together.</p>
+  </section>
 
-    <section class="feature" data-bg="about">
-      <h2>👩‍🚀 About MindOrbit</h2>
-      <p>A futuristic safe space built to nurture emotions and positivity.</p>
-    </section>
+  <!-- ABOUT -->
+  <section class="feature">
+    <h2>✨ About MindOrbit</h2>
+    <p>MindOrbit is a futuristic platform designed to nurture calm, positivity, and emotional understanding through interactive experiences.</p>
+  </section>
 
-    <section class="feature" data-bg="contact">
-      <h2>📬 Contact Us</h2>
-      <p>Reach us anytime at <strong>freshminds@mindorbit.in</strong></p>
-    </section>
-  </main>
+  <!-- CONTACT -->
+  <section class="feature contact">
+    <h2>📞 Contact Us</h2>
+    <p>Reach us anytime at <strong>freshminds@mindorbit.in</strong></p>
+  </section>
 
   <footer>
     <p>© 2025 MindOrbit · A Safe Place — Raheen</p>
   </footer>
 
-  <!-- ✅ Only for homepage -->
-  <script src="{{ url_for('static', filename='/home.js') }}"></script>
+  <script src="{{ url_for('static', filename='home.js') }}"></script>
 </body>
 </html>
