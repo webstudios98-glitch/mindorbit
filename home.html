@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MindOrbit — A Safe Place</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+
+  <!-- Background Galaxy Canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <header>
+    <h1 >🌌 MindOrbit</h1>
+    <nav>
+      <a href="/scanner">Scanner</a>
+      <a href="/chat">Chat</a>
+      <a href="/moodgame">MoodGames</a>
+      <a href="/noteheart">NoteHeart</a>
+      <a href="/calmspace">CalmSpace</a>
+      <a href="/badges">Badges</a>
+      <a href="/feedback">Feedback</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- INTRO -->
+    <section class="intro">
+      <h2>Welcome to MindOrbit</h2>
+      <p>A futuristic safe place where emotions, calmness, and technology meet. Let your mind orbit freely — explore, feel, and heal.</p>
+      <button onclick="scrollToFeatures()">🌠 Start Your Journey</button>
+    </section>
+
+    <!-- SECTIONS -->
+    <div class="features">
+      <!-- SCANNER -->
+      <section class="feature">
+        <h2>🔮 Mood Scanner</h2>
+        <p>MOOD SCANNER scans your mood with cheerful background sounds to uplift you — no matter how rough the day is, MindOrbit listens to your heart.</p>
+      </section>
+
+      <!-- CHAT -->
+      <section class="feature">
+        <h2>💬 Chat Companion</h2>
+        <p>Talk to an AI that listens and uplifts. Share your feelings freely — your words stay private. This humanized AI understands you even when no one else does.</p>
+      </section>
+
+       <!-- MOOD GAMES -->
+  <section class="feature">
+    <h2>🎮 Mood Games</h2>
+    <p>Play your feelings out. Relaxing, creative and emotional games to heal through joy and discovery.
+    Breathing- relax your mind by breathing session and move to other games and activities to cheer yourself.
+    DotConnect- connect different glowing colors.
+    Soothingsounds- it plays relaxing sounds from nature to asmr, the sounds that can soothes your thoughts and moods just you, sounds and complete silence so you feel your way.
+    Painting- you can draw anything with glowing colors choose your own color and paint things and save it.
+    Quote oracle- feeling motivationless? Have no one to motivate you? Unfold the quote.
+    Lexilink- match the letters to make your words.
+    Little alchemy- want to discover new things? How the things can be mixed to make a new entity? just play little alchemy.</p>
+  </section>
+
+      <!-- NOTEHEART -->
+      <section class="feature">
+        <h2>📝 NoteHeart</h2>
+        <p>Write what your heart feels. It's completely anonymous — your personal emotional notebook. Write, release, and feel lighter instantly.</p>
+      </section>
+
+      <!-- CALMSPACE -->
+      <section class="feature">
+        <h2>🌿 CalmSpace</h2>
+        <p>Practice mindfulness with breathing exercises, affirmations, and peaceful visuals. It helps you slow down and rediscover peace in your mind.</p>
+      </section>
+
+      <!-- BADGES -->
+      <section class="feature">
+        <h2>🏅 Achievements</h2>
+        <p>Earn badges as you explore MindOrbit — each moment of reflection, each small victory, each smile counts.</p>
+      </section>
+
+      <!-- FEEDBACK -->
+      <section class="feature">
+        <h2>💌 Feedback</h2>
+        <p>We’d love to hear from you! Your words help shape the safe and healing space we build together.</p>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="feature">
+        <h2>✨ About MindOrbit</h2>
+        <p>MindOrbit is a futuristic mental health platform designed to nurture positivity, calm, and emotional understanding through immersive experiences.</p>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="feature contact">
+        <h2>📞 Contact Us</h2>
+        <p>Reach us anytime at <strong>freshminds@mindorbit.in</strong></p>
+      </section>
+    </div>
+  </main>
+
+ <footer style="width: 100%; text-align: center; padding: 15px 0; background: #000; border-top: 1px solid #00eaff;">
+    <p style="color: #00eaff; margin: 0 0 8px;">© 2025 MindOrbit: A Safe Place – Raheen</p>
+    
+    <a href="/privacy" style="color: #00eaff; margin: 0 10px; text-decoration: none;">Privacy Policy</a> |
+    <a href="/terms" style="color: #00eaff; margin: 0 10px; text-decoration: none;">Terms & Conditions</a> |
+</footer>
+  
+  <!-- Background Music -->
+<audio id="bgMusic" src="{{ url_for('bg_music') }}" autoplay loop></audio>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("bgMusic");
+  audio.volume = 0.5;
+
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      const startMusic = () => {
+        // Optional fade-in effect
+        audio.volume = 0;
+        audio.play();
+        let volume = 0;
+        const fade = setInterval(() => {
+          if (volume < 0.5) {
+            volume += 0.02;
+            audio.volume = volume;
+          } else clearInterval(fade);
+        }, 200);
+
+        document.removeEventListener("click", startMusic);
+        document.removeEventListener("touchstart", startMusic);
+      };
+      document.addEventListener("click", startMusic);
+      document.addEventListener("touchstart", startMusic);
+    });
+  }
+});
+</script>
+
+  <script src="{{ url_for('static', filename='home.js') }}"></script>
+</body>
+</html>
